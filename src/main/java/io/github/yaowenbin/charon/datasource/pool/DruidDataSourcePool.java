@@ -1,5 +1,7 @@
 package io.github.yaowenbin.charon.datasource.pool;
 
+import org.springframework.stereotype.Component;
+
 import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Author yaowenbin
  * @Date 2023/8/22
  */
+@Component
 public class DruidDataSourcePool implements DataSourcePool {
 
     private Map<String/* DataSourceName */, DataSource> dataSourcePoolMap = new ConcurrentHashMap<>();

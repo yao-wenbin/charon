@@ -1,4 +1,4 @@
-package io.github.yaowenbin.charon.configuration;
+package io.github.yaowenbin.charon.autoconfiguration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

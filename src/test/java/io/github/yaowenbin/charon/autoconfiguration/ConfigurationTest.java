@@ -1,4 +1,4 @@
-package io.github.yaowenbin.charon.configuration;
+package io.github.yaowenbin.charon.autoconfiguration;
 
 import io.github.yaowenbin.charon.IntegrationTest;
 import org.junit.jupiter.api.Test;
