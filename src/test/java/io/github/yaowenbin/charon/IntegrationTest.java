@@ -6,9 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * @Author yaowenbin
@@ -16,6 +18,8 @@ import org.testcontainers.junit.jupiter.Container;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = CharonApplication.class)
+@PropertySource(value = "classpath:/charon-conf.yml")
+@Testcontainers
 public class IntegrationTest extends Assertions {
 
     protected static final Logger log = LoggerFactory.getLogger(IntegrationTest.class);

@@ -1,6 +1,5 @@
 package io.github.yaowenbin.charon.autoconfiguration;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +12,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class DataSourceProperty {
+public class DataSourceMetaProperties {
 
     private String url;
 

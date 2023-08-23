@@ -12,8 +12,8 @@ import java.util.Map;
  */
 @Data
 @ConfigurationProperties
-public class DataSourceConfiguration {
+public class DataSourceConfigurationProperties {
 
-    private Map<String, DataSourceProperty> datasource = new HashMap<>();
+    private Map<String, DataSourceMetaProperties> datasource = new HashMap<>();
 
 }
