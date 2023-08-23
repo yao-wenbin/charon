@@ -7,11 +7,6 @@
     <groupId>io.github.yao-wenbin</groupId>
     <artifactId>charon</artifactId>
     <version>0.0.1-SNAPHOST</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>datasource</module>
-        <module>starter</module>
-    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
