@@ -2,8 +2,8 @@ package io.github.yaowenbin.charon.datasource;
 
 import io.github.yaowenbin.charon.autoconfiguration.DataSourceConfiguration;
 import io.github.yaowenbin.charon.datasource.pool.DataSourcePool;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,16 +14,15 @@ import javax.annotation.PostConstruct;
  */
 @Service
 @RequiredArgsConstructor
+@Getter
 public class DataSourceService {
 
     private final DataSourceConfiguration dataSourceConfiguration;
     private final DataSourcePool datasoucePool;
     private final DataSourceCreator dsCreator;
-    private final Environment env;
 
     @PostConstruct
     public void init() {
-        env.getProperty("datasource");
         dataSourceConfiguration.getDatasource().forEach((key, property) -> {
            datasoucePool.addDataSource(key, dsCreator.create(property));
         });

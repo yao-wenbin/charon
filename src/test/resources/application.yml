@@ -1,9 +1,3 @@
-datasource:
-  db1:
-    username: root
-    password: root
-    # TODO Using Simple url and warp in DataSourceProperty
-    url: jdbc:mysql://127.0.0.1:3306/charon
 server:
   port: 8808
 spring:

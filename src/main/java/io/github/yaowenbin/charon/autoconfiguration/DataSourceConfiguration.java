@@ -10,13 +10,10 @@ import java.util.Map;
  * @Author yaowenbin
  * @Date 2023/8/21
  */
-// @Configuration
 @Data
 @ConfigurationProperties
 public class DataSourceConfiguration {
 
     private Map<String, DataSourceProperty> datasource = new HashMap<>();
-
-    private boolean test;
 
 }
