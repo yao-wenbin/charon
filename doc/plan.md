@@ -33,3 +33,22 @@ That's it. It's the basic concept and plan for Charon.
 
 Hope it will make a welcome to every user of MySQL which has a problem to operating and monitoring.
 
+## 4. Tasks
+
+-[ ] I'm user, I can use Charon's **performance schema component** to query my MySQL Database's performance schema to get 
+the runtime state of MySQL.
+
+
+-[ ] I'm user, I can use Charon's by load external configuration file in Disk.
+  
+-[ ] I'm user, If I don't specific a path of external configuration file, I want Charon will load `${CHARON_HOME}/conf/charon-conf.yml` file instead.
+
+-[ ] I'm user, I want to start Charon by single shell script, such as `sh charon start`, and close charon by 'sh charon stop'.
+    It's very easy to use, Right?.
+ 
+-[ ] I'm user, I want to have a Web UI embedded in Charon so that I can simply view my MySQL Database state in Browser.
+-[ ] I'm user, I want to have a monitor configuration item to config the monitor interval of Charon .
+-[ ] I'm user, I want to have an Alerter Configuration item, with two sub configuration of Rule and Notify.
+  -[ ] I'm user, I want to have a Rule sub-configuration item to define the alert threshold of Monitor Data. If Monitor 
+        Data over the threshold, Charon can use notify component to let me know my database have something warning.
+  -[ ] I'm user, I want to have a notify sub-configuration item to define the way to let to know Charon have something occur. Simply By Email.
