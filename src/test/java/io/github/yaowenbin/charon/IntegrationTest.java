@@ -1,13 +1,12 @@
 package io.github.yaowenbin.charon;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -20,13 +19,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(classes = CharonApplication.class)
 @PropertySource(value = "classpath:/charon-conf.yml")
 @Testcontainers
-public class IntegrationTest extends Assertions {
-
-    protected static final Logger log = LoggerFactory.getLogger(IntegrationTest.class);
+@ActiveProfiles("test")
+public class IntegrationTest extends UnitTest {
 
     @Container
-    protected static final MySQLContainer MY_SQL_CONTAINER =
-            new MySQLContainer("mysql:8").withDatabaseName("charon").withUsername("root").withPassword("root");
+    protected static final JdbcDatabaseContainer MY_SQL_CONTAINER =
+            new MySQLContainer("mysql:8")
+                    .withInitScript("sql/init.sql")
+                    .withDatabaseName("charon")
+                    .withUsername("root")
+                    .withPassword("root");
 
     @Test
     void mysqlContainerRunning() {

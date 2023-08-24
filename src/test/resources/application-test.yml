@@ -3,6 +3,3 @@ server:
 spring:
   application:
     name: charon
-
-mybatis-flex:
-  mapper-locations: classpath*:mapper/*.xml
