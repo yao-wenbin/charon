@@ -13,5 +13,5 @@ public interface PerformanceSchemaMapper {
 
     List<UnindexedSql> listNoIndexUsedSql(NoIndexUsedSqlReq param);
 
-
+    Long count();
 }

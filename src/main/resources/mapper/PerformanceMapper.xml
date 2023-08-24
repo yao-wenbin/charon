@@ -5,7 +5,7 @@
     <select id="listNoIndexUsedSql" resultType="io.github.yaowenbin.charon.monitor.UnindexedSql">
         SELECT THREAD_ID, SQL_TEXT, CURRENT_SCHEMA, TIMER_WAIT exec_time_ns, NO_INDEX_USED
         FROM performance_schema.events_statements_history
-        <where>
+        WHERE
             SQL_TEXT IS NOT NULL
             <if test="threadId != null">
                 AND THREAD_ID = #{threadId}
@@ -19,7 +19,11 @@
             <if test="execTimeNs != null">
                 AND TIMER_WAIT >= #{execTimeNs}
             </if>
-        </where>
+    </select>
+
+    <select id="count" resultType="Long">
+        select count(*)
+        FROM test
     </select>
 
     <!--<select id="listSqlExecTimes" resultType="com.yaowb.monitor.performance.SqlExecTimesResp">-->

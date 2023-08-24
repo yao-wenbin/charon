@@ -48,9 +48,9 @@ public class MultiDataSource extends AbstractDataSource implements InitializingB
 
     public DataSource getDataSource(String key) {
         DataSource ds = dataSourcePoolMap.get(key);
-        if (ds == null) {
-            throw new DataSourceException("Please using @DS or DataSourceHolder#push() API to select a DataSource First");
-        }
+        // if (ds == null) {
+        //     throw new DataSourceException("Please using @DS or DataSourceHolder#push() API to select a DataSource First");
+        // }
         return ds;
     }
 

@@ -1,11 +1,6 @@
 package io.github.yaowenbin.charon;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -15,12 +10,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * @Author yaowenbin
  * @Date 2023/8/21
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = CharonApplication.class)
-@PropertySource(value = "classpath:/charon-conf.yml")
 @Testcontainers
-@ActiveProfiles("test")
-public class IntegrationTest extends UnitTest {
+public class IntegrationTest extends SpringContextTest {
 
     @Container
     protected static final JdbcDatabaseContainer MY_SQL_CONTAINER =

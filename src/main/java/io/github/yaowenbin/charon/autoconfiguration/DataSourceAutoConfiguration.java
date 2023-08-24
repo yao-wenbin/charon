@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * @Author yaowenbin
@@ -27,10 +30,12 @@ public class DataSourceAutoConfiguration {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean() {
+    public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
         SqlSessionFactoryBean sqlSessionfactoryBean = new SqlSessionFactoryBean();
         // key to achieve dynamic switch to MyBatis.
         sqlSessionfactoryBean.setDataSource(dataSource());
+        ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
+        sqlSessionfactoryBean.setMapperLocations(resourceResolver.getResources("classpath*:mapper/*.xml"));
         return sqlSessionfactoryBean;
     }
 

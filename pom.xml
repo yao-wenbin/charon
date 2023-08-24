@@ -124,8 +124,8 @@
                     <includes>
                         <include>**/*.properties</include>
                         <include>**/*.xml</include>
+                        <include>**/*.yml</include>
                     </includes>
-                    <filtering>false</filtering>
                 </resource>
             </resources>
         <plugins>

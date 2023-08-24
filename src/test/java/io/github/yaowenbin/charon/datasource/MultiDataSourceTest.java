@@ -1,6 +1,6 @@
 package io.github.yaowenbin.charon.datasource;
 
-import io.github.yaowenbin.charon.IntegrationTest;
+import io.github.yaowenbin.charon.SpringContextTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
@@ -9,10 +9,16 @@ import javax.annotation.Resource;
  * @Author yaowenbin
  * @Date 2023/8/23
  */
-class MultiDataSourceTest extends IntegrationTest {
+class MultiDataSourceTest extends SpringContextTest {
 
     @Resource
     MultiDataSource dataSource;
+
+    @Test
+    void afterPropertiesSet() {
+        // db1 come from charon-conf.yml
+        assertThat(dataSource.getDataSource("db1")).isNotNull();
+    }
 
     @Test
     void getConnection() {
