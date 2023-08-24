@@ -1,4 +1,4 @@
-package io.github.yaowenbin.charon.autoconfiguration;
+package io.github.yaowenbin.charon.autoconfiguration.properties;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

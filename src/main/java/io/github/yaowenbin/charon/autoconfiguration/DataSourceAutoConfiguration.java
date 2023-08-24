@@ -1,5 +1,6 @@
 package io.github.yaowenbin.charon.autoconfiguration;
 
+import io.github.yaowenbin.charon.autoconfiguration.properties.DataSourceConfigurationProperties;
 import io.github.yaowenbin.charon.datasource.DataSourceCreator;
 import io.github.yaowenbin.charon.datasource.MultiDataSource;
 import lombok.RequiredArgsConstructor;
