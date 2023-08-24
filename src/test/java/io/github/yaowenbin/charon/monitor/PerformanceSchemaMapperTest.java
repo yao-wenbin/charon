@@ -24,10 +24,5 @@ public class PerformanceSchemaMapperTest extends SpringContextTest {
         assertThat(result).isNotNull();
     }
 
-    @Test
-    void count() {
-        mapper.count();
-    }
-
 
 }

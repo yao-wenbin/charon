@@ -7,6 +7,7 @@
         FROM performance_schema.events_statements_history
         WHERE
             SQL_TEXT IS NOT NULL
+            AND NO_INDEX_USED = 1
             <if test="threadId != null">
                 AND THREAD_ID = #{threadId}
             </if>
@@ -19,11 +20,6 @@
             <if test="execTimeNs != null">
                 AND TIMER_WAIT >= #{execTimeNs}
             </if>
-    </select>
-
-    <select id="count" resultType="Long">
-        select count(*)
-        FROM test
     </select>
 
     <!--<select id="listSqlExecTimes" resultType="com.yaowb.monitor.performance.SqlExecTimesResp">-->
@@ -57,27 +53,27 @@
     <!--    GROUP BY EVENT_NAME-->
     <!--</select>-->
 
-    <!--<select id="listThreads" resultType="com.yaowb.monitor.performance.ThreadResp">-->
-    <!--    SELECT THREAD_ID, PROCESSLIST_ID, THREAD_OS_ID, PROCESSLIST_USER user, PROCESSLIST_HOST host, PROCESSLIST_DB db,-->
-    <!--    PROCESSLIST_COMMAND, PROCESSLIST_TIME, PROCESSLIST_STATE, CONNECTION_TYPE-->
-    <!--    FROM performance_schema.threads-->
-    <!--    WHERE TYPE = 'FOREGROUND'-->
-    <!--    <if test="user != null and user != ''">-->
-    <!--        AND PROCESSLIST_USER = #{user}-->
-    <!--    </if>-->
-    <!--    <if test="host != null and host != ''">-->
-    <!--        AND PROCESSLIST_HOST = #{host}-->
-    <!--    </if>-->
-    <!--    <if test="db != null and db != ''">-->
-    <!--        AND PROCESSLIST_DB = #{db}-->
-    <!--    </if>-->
-    <!--    <if test="connectionType != null and connectionType != ''">-->
-    <!--        AND CONNECTION_TYPE = #{connectionType}-->
-    <!--    </if>-->
-    <!--    <if test="time != null">-->
-    <!--        AND PROCESSLIST_TIME > #{time}-->
-    <!--    </if>-->
-    <!--</select>-->
+    <select id="listMysqlThread" resultType="io.github.yaowenbin.charon.monitor.MysqlThread">
+        SELECT THREAD_ID as thread_id, PROCESSLIST_ID as processlist_id, THREAD_OS_ID as os_thread_id, PROCESSLIST_USER as user, PROCESSLIST_HOST as host, PROCESSLIST_DB as db,
+        PROCESSLIST_COMMAND as command, PROCESSLIST_TIME as time, PROCESSLIST_STATE as state, CONNECTION_TYPE as connectino_type
+        FROM performance_schema.threads
+        WHERE TYPE = 'FOREGROUND'
+        <if test="user != null and user != ''">
+            AND PROCESSLIST_USER = #{user}
+        </if>
+        <if test="host != null and host != ''">
+            AND PROCESSLIST_HOST = #{host}
+        </if>
+        <if test="db != null and db != ''">
+            AND PROCESSLIST_DB = #{db}
+        </if>
+        <if test="connectionType != null and connectionType != ''">
+            AND CONNECTION_TYPE = #{connectionType}
+        </if>
+        <if test="time != null">
+            AND PROCESSLIST_TIME > #{time}
+        </if>
+    </select>
 
     <!--<select id="listMemoryAllocated"-->
     <!--        resultType="com.yaowb.monitor.performance.MemoryAllocatedResp">-->

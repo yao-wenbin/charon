@@ -11,7 +11,9 @@ import java.util.List;
 @Mapper
 public interface PerformanceSchemaMapper {
 
+    List<UnindexedSql> listNoIndexUsedSql();
+
     List<UnindexedSql> listNoIndexUsedSql(NoIndexUsedSqlReq param);
 
-    Long count();
+    List<MysqlThread> listMysqlThread();
 }
