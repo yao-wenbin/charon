@@ -3,14 +3,11 @@ package io.github.yaowenbin.charon.autoconfiguration;
 import io.github.yaowenbin.charon.datasource.DataSourceCreator;
 import io.github.yaowenbin.charon.datasource.MultiDataSource;
 import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * @Author yaowenbin
@@ -18,6 +15,7 @@ import java.io.IOException;
  */
 @Configuration
 @RequiredArgsConstructor
+@AutoConfigureBefore(value = DataSourceAutoConfiguration.class, name = "com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure")
 public class DataSourceAutoConfiguration {
 
     private final DataSourceConfigurationProperties properties;
@@ -27,16 +25,6 @@ public class DataSourceAutoConfiguration {
     @Bean
     public DataSource dataSource() {
         return new MultiDataSource(properties, creator);
-    }
-
-    @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
-        SqlSessionFactoryBean sqlSessionfactoryBean = new SqlSessionFactoryBean();
-        // key to achieve dynamic switch to MyBatis.
-        sqlSessionfactoryBean.setDataSource(dataSource());
-        ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-        sqlSessionfactoryBean.setMapperLocations(resourceResolver.getResources("classpath*:mapper/*.xml"));
-        return sqlSessionfactoryBean;
     }
 
 }

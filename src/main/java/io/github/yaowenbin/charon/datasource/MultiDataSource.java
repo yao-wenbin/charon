@@ -2,6 +2,7 @@ package io.github.yaowenbin.charon.datasource;
 
 import io.github.yaowenbin.charon.autoconfiguration.DataSourceConfigurationProperties;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
@@ -34,12 +35,24 @@ public class MultiDataSource extends AbstractDataSource implements InitializingB
 
     @Override
     public Connection getConnection() throws SQLException {
-        return peekDataSource().getConnection();
+        return peekOrFirstDataSource().getConnection();
     }
 
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
-        return peekDataSource().getConnection(username, password);
+        return peekOrFirstDataSource().getConnection(username, password);
+    }
+
+    public DataSource peekOrFirstDataSource() {
+        String peekKey = DataSourceHolder.peek();
+        if (Strings.isEmpty(peekKey)) {
+            if (dataSourcePoolMap.isEmpty()) {
+                throw new DataSourceException("Please set a datasource in charon-conf.yml");
+            } else {
+                return dataSourcePoolMap.values().stream().findFirst().get();
+            }
+        }
+        return getDataSource(peekKey);
     }
 
     public DataSource peekDataSource() {
@@ -48,9 +61,9 @@ public class MultiDataSource extends AbstractDataSource implements InitializingB
 
     public DataSource getDataSource(String key) {
         DataSource ds = dataSourcePoolMap.get(key);
-        // if (ds == null) {
-        //     throw new DataSourceException("Please using @DS or DataSourceHolder#push() API to select a DataSource First");
-        // }
+        if (ds == null) {
+            throw new DataSourceException("cannot get DataSource by key: " + key);
+        }
         return ds;
     }
 
