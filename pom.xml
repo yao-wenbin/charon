@@ -8,7 +8,7 @@
     <artifactId>charon</artifactId>
     <version>0.0.1-SNAPHOST</version>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -28,6 +28,7 @@
         <testcontainers.version>1.18.3</testcontainers.version>
         <mybatis-flex.version>1.5.8</mybatis-flex.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -138,6 +139,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
+                <inherited>false</inherited>
                 <executions>
                     <execution>
                         <id>release-client</id>
@@ -153,6 +155,48 @@
                     </descriptors>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
+            </plugin>
+
+            <!--  for package vue project into spring's resource   -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <executions>
+                    <!-- npm install -->
+                    <execution>
+                        <id>exec-npm-install</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argumnet>install</argumnet>
+                            </arguments>
+                            <workingDirectory>${basedir}/frontend</workingDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!-- npm run build -->
+                    <execution>
+                        <id>exec-npm-run-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${basedir}/frontend</workingDirectory>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argumnet>run</argumnet>
+                                <argumnet>build</argumnet>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
