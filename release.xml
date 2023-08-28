@@ -8,6 +8,7 @@
         <format>zip</format>
         <format>tar.gz</format>
     </formats>
+
     <includeBaseDirectory>false</includeBaseDirectory>
 
     <files>
@@ -20,12 +21,9 @@
 
     <fileSets>
         <fileSet>
-            <directory>${project.build.outputDirectory}</directory>
-            <outputDirectory>/</outputDirectory>
-        </fileSet>
-        <fileSet>
             <includes>
                 <include>bin/**</include>
+                <include>conf/**</include>
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
