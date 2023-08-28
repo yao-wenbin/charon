@@ -1,2 +1,6 @@
 #bin/sh
-java -jar ../charon-0.0.1-SNAPHOST.jar --spring.config.location=file:/Users/yaowenbin/Projects/charon/conf/charon-conf.yml
+PARENT_DIR=$(cd $(dirname $0);cd ..; pwd)
+
+SPRING_ARG="--spring.config.additional-location=file:${PARENT_DIR}/config/charon.yml"
+
+java -jar ${PARENT_DIR}/charon-0.0.1-SNAPHOST.jar ${SPRING_ARG}

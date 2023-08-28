@@ -23,7 +23,7 @@
         <fileSet>
             <includes>
                 <include>bin/**</include>
-                <include>conf/**</include>
+                <include>config/**</include>
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
