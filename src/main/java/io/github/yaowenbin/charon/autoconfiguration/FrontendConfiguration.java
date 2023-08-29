@@ -23,8 +23,7 @@ public class FrontendConfiguration implements WebMvcConfigurer {
     static class IndexController {
         // 系统首页
         @GetMapping(value = { "/", "/index", "/login" })
-        public String index()
-        {
+        public String index() {
             return "index.html";
         }
     }
