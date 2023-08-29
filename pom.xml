@@ -8,7 +8,12 @@
     <artifactId>charon</artifactId>
     <version>0.0.1-SNAPHOST</version>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>server</module>
+        <module>charon-core</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -234,7 +239,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>io.github.yaowenbin.charon.CharonApplication</mainClass>
+                    <mainClass>io.github.yaowenbin.server.CharonApplication</mainClass>
                 </configuration>
             </plugin>
 
