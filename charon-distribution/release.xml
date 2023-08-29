@@ -11,6 +11,20 @@
 
     <includeBaseDirectory>false</includeBaseDirectory>
 
+    <!--<moduleSets>-->
+    <!--    <moduleSet>-->
+    <!--    <useAllReactorProjects>true</useAllReactorProjects>-->
+    <!--    <includes>-->
+    <!--        <include>io.github.yao-wenbin:charon-server</include>-->
+    <!--    </includes>-->
+    <!--        <binaries>-->
+    <!--            <outputDirectory>modules/maven-assembly-plugin</outputDirectory>-->
+    <!--            <unpack>false</unpack>-->
+    <!--        </binaries>-->
+    <!--    </moduleSet>-->
+
+    <!--</moduleSets>-->
+
     <files>
         <file>
             <!-- add spring-boot-maven-plugin's output into root directory-->

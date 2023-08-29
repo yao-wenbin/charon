@@ -6,8 +6,11 @@
     <parent>
         <groupId>io.github.yao-wenbin</groupId>
         <artifactId>charon</artifactId>
-        <version>0.0.1-SNAPHOST</version>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <packaging>pom</packaging>
 
     <artifactId>charon-distribution</artifactId>
 
@@ -21,10 +24,22 @@
         <dependency>
             <groupId>io.github.yao-wenbin</groupId>
             <artifactId>charon-server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <!--包含文件夹以及子文件夹下所有资源-->
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <!--  for package vue project into spring's resource   -->
             <plugin>
@@ -46,14 +61,14 @@
                         <goals>
                             <goal>install-node-and-yarn</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                     </execution>
                     <execution>
                         <id>yarn install</id>
                         <goals>
                             <goal>yarn</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -63,7 +78,7 @@
                         <goals>
                             <goal>yarn</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                         <configuration>
                             <arguments>build</arguments>
                         </configuration>
@@ -78,7 +93,7 @@
                 <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -100,7 +115,7 @@
                     </execution>
                     <execution>
                         <id>copy-index-html</id>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -131,14 +146,13 @@
             <!-- assemble shell script  in bin and example config file in config dir with spring boot jar into target -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <inherited>false</inherited>
                 <executions>
                     <execution>
                         <id>release-client</id>
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>install</phase>
                     </execution>
                 </executions>
                 <configuration>

@@ -6,7 +6,7 @@
 
     <groupId>io.github.yao-wenbin</groupId>
     <artifactId>charon</artifactId>
-    <version>0.0.1-SNAPHOST</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -29,6 +29,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <revision>0.0.1-SNAPSHOT</revision>
         <commons.version>1.0.0</commons.version>
         <spring-boot.version>2.7.13</spring-boot.version>
         <testcontainers.version>1.18.3</testcontainers.version>
@@ -43,7 +44,7 @@
             <dependency>
                 <groupId>io.github.yao-wenbin</groupId>
                 <artifactId>charon-server</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <!-- for better code -->
