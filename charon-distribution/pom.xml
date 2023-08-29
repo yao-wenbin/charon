@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.yao-wenbin</groupId>
+        <artifactId>charon</artifactId>
+        <version>0.0.1-SNAPHOST</version>
+    </parent>
+
+    <artifactId>charon-distribution</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.yao-wenbin</groupId>
+            <artifactId>charon-server</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--  for package vue project into spring's resource   -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+                <configuration>
+                    <nodeVersion>v18.17.1</nodeVersion>
+                    <yarnVersion>v1.22.11</yarnVersion>
+                    <workingDirectory>../ui</workingDirectory>
+                    <!-- 若不方便访问官网，可使用国内淘宝镜像-->
+                    <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+                    <npmDownloadRoot>https://registry.npm.taobao.org/npm/</npmDownloadRoot>
+                    <!--<installDirectory>/usr/local/bin</installDirectory>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and yarn</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                    <execution>
+                        <id>yarn install</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- integrate frontend resource to spring boot resources directory. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <!--打成jar包后复制到的路径-->
+                            <outputDirectory>../charon-server/src/main/resources/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--项目中需要复制的文件路径-->
+                                    <directory>../ui/dist/</directory>
+                                    <includes>**/**.*</includes>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-index-html</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <!--打成jar包后复制到的路径-->
+                            <outputDirectory>../charon-server/src/main/resources/templates</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--项目中需要复制的文件路径-->
+                                    <directory>../ui/dist/</directory>
+                                    <includes>index.html</includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>io.github.yaowenbin.server.CharonApplication</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- assemble shell script  in bin and example config file in config dir with spring boot jar into target -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>release-client</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+                        <descriptor>release.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

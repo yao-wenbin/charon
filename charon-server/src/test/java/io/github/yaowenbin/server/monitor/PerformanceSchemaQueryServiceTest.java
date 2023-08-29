@@ -2,6 +2,7 @@ package io.github.yaowenbin.server.monitor;
 
 import io.github.yaowenbin.server.SpringContextTest;
 import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,7 @@ class PerformanceSchemaQueryServiceTest extends SpringContextTest {
 
     public static final String testDbKey = "db1";
 
-    @io.github.yaowenbin.server.monitor.Test
+    @Test
     void listUnindexedSql() {
         List<UnindexedSql> result = performanceSchemaQueryService.listUnindexedSqlByDs(testDbKey);
         assertThat(result).hasSize(0);

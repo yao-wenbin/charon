@@ -14,7 +14,7 @@
     <files>
         <file>
             <!-- add spring-boot-maven-plugin's output into root directory-->
-            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <source>../charon-server/target/charon-server-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
         </file>
     </files>

@@ -1,6 +1,6 @@
 package io.github.yaowenbin.server.monitor;
 
-import io.github.yaowenbin.charon.SpringContextTest;
+import io.github.yaowenbin.server.SpringContextTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;

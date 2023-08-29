@@ -2,6 +2,7 @@ package io.github.yaowenbin.server.monitor;
 
 import io.github.yaowenbin.server.SpringContextTest;
 import io.github.yaowenbin.server.datasource.DataSourceHolder;
+import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
 import java.util.List;

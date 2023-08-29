@@ -1,7 +1,7 @@
 package io.github.yaowenbin.server.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import io.github.yaowenbin.charon.IntegrationTest;
+import io.github.yaowenbin.server.IntegrationTest;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
 import org.junit.jupiter.api.Test;
 

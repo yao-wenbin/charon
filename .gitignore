@@ -28,5 +28,6 @@ target
 node_modules
 yarn.lock
 dist/
-resources/templates/
-resources/static/
+
+/charon-server/src/main/resources/static
+/charon-server/src/main/resources/templates
