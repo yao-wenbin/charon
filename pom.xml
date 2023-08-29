@@ -8,7 +8,7 @@
     <artifactId>charon</artifactId>
     <version>0.0.1-SNAPHOST</version>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -28,7 +28,7 @@
         <testcontainers.version>1.18.3</testcontainers.version>
         <mybatis-flex.version>1.5.8</mybatis-flex.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
-        <frontend-maven-plugin.version>1.6.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -36,6 +36,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- for integrate fronted resource in spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- for configuration load -->
@@ -122,20 +128,14 @@
     <build>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src/main/resources</directory>
                 <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.yml</include>
+                    <!--包含文件夹以及子文件夹下所有资源-->
+                    <include>**/*.*</include>
                 </includes>
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
             <!--  for package vue project into spring's resource   -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -156,14 +156,14 @@
                         <goals>
                             <goal>install-node-and-yarn</goal>
                         </goals>
-                        <phase>generate-resources</phase>
+                        <phase>verify</phase>
                     </execution>
                     <execution>
                         <id>yarn install</id>
                         <goals>
                             <goal>yarn</goal>
                         </goals>
-                        <phase>generate-resources</phase>
+                        <phase>verify</phase>
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -173,12 +173,20 @@
                         <goals>
                             <goal>yarn</goal>
                         </goals>
-                        <phase>compile</phase>
+                        <phase>verify</phase>
                         <configuration>
                             <arguments>build</arguments>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>io.github.yaowenbin.charon.CharonApplication</mainClass>
+                </configuration>
             </plugin>
 
             <!-- assemble shell script  in bin and example config file in config dir with spring boot jar into target -->
@@ -191,7 +199,7 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
                 <configuration>

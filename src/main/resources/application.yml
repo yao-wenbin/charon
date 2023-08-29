@@ -3,7 +3,8 @@ server:
 spring:
   application:
     name: charon
-
-
+# for develop
+  thymeleaf:
+    cache: false
 mybatis-flex:
   mapper-locations: classpath*:mapper/*.xml
