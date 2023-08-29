@@ -31,104 +31,71 @@
         <commons.version>1.0.0</commons.version>
         <spring-boot.version>2.7.13</spring-boot.version>
         <testcontainers.version>1.18.3</testcontainers.version>
+        <druid.version>1.2.18</druid.version>
         <mybatis-flex.version>1.5.8</mybatis-flex.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
         <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
     </properties>
 
-    <dependencies>
-        <!-- for web application -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <!-- for better code -->
+            <dependency>
+                <groupId>io.github.yao-wenbin</groupId>
+                <artifactId>commons</artifactId>
+                <version>${commons.version}</version>
+            </dependency>
 
-        <!-- for integrate fronted resource in spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+            <!-- for load and manage DataSource of User-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
 
-        <!-- for configuration load -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
+            <!-- for orm -->
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+            <!--    for using container to integration test-->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mysql</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-        <!-- for better code -->
-        <dependency>
-            <groupId>io.github.yao-wenbin</groupId>
-            <artifactId>commons</artifactId>
-            <version>${commons.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-        <!-- for load and manage DataSource of User-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.18</version>
-        </dependency>
+            <!-- for compatible with testcontainers without cannot find junit TestRule and cannot find junit5.18.2 in maven central error.(Because testcontainers have shitty compatibility~)-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <!-- for orm -->
-        <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-            <version>${mybatis-flex.version}</version>
-        </dependency>
-
-        <!-- for jdbc connection -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--    for using container to integration test-->
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- for compatible with testcontainers without cannot find junit TestRule and cannot find junit5.18.2 in maven central error.(Because testcontainers have shitty compatibility~)-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <resources>
