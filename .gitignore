@@ -27,4 +27,6 @@ target
 
 node_modules
 yarn.lock
-dist
+dist/
+resources/templates/
+resources/static/
