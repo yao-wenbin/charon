@@ -181,6 +181,55 @@
                 </executions>
             </plugin>
 
+            <!-- integrate frontend resource to spring boot resources directory. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <!--打成jar包后复制到的路径-->
+                            <outputDirectory>./src/main/resources/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--项目中需要复制的文件路径-->
+                                    <directory>./ui/dist/</directory>
+                                    <includes>**/**.*</includes>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-index-html</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <!--打成jar包后复制到的路径-->
+                            <outputDirectory>./src/main/resources/templates</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--项目中需要复制的文件路径-->
+                                    <directory>./ui/dist/</directory>
+                                    <includes>index.html</includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
