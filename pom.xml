@@ -44,6 +44,12 @@
         <dependencies>
             <dependency>
                 <groupId>io.github.yao-wenbin</groupId>
+                <artifactId>charon-core</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.yao-wenbin</groupId>
                 <artifactId>charon-server</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>

@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.yao-wenbin</groupId>
+            <artifactId>charon-core</artifactId>
+        </dependency>
+
         <!-- for web application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

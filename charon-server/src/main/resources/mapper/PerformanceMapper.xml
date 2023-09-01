@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.github.yaowenbin.charon.monitor.PerformanceSchemaMapper">
+<mapper namespace="io.github.yaowenbin.server.monitor.PerformanceSchemaMapper">
 
     <select id="listNoIndexUsedSql" resultType="io.github.yaowenbin.server.monitor.UnindexedSql">
         SELECT THREAD_ID, SQL_TEXT, CURRENT_SCHEMA, TIMER_WAIT exec_time_ns, NO_INDEX_USED
