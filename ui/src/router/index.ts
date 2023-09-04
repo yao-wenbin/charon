@@ -2,8 +2,8 @@ import {App} from 'vue';
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 import {RedirectRoute} from '@/router/base';
 import {PageEnum} from '@/enums/pageEnum';
-import {createRouterGuards} from './guards';
 import type {IModuleType} from './types';
+import {createRouterGuards} from "@/router/guards";
 
 const modules = import.meta.glob<IModuleType>('./modules/**/*.ts', { eager: true });
 
@@ -38,10 +38,12 @@ export const LoginRoute: RouteRecordRaw = {
 };
 
 //需要验证权限
-export const asyncRoutes = [...routeModuleList];
+// export const asyncRoutes = [...routeModuleList]
 
 //普通路由 无需验证权限
-export const constantRouter: RouteRecordRaw[] = [LoginRoute, RootRoute, RedirectRoute];
+export const constantRouter: RouteRecordRaw[] = [LoginRoute, RootRoute, RedirectRoute, ...routeModuleList];
+
+export const asyncRoutes = [...constantRouter];
 
 const router = createRouter({
   history: createWebHashHistory(),

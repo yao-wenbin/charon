@@ -325,11 +325,12 @@ const loading = ref(true);
 
   onMounted(async () => {
     const data = await getConsoleInfo();
-    visits.value = data.visits;
-    saleroom.value = data.saleroom;
-    orderLarge.value = data.orderLarge;
-    volume.value = data.volume;
-    loading.value = false;
+    console.log(data)
+    // visits.value = data.visits;
+    // saleroom.value = data.saleroom;
+    // orderLarge.value = data.orderLarge;
+    // volume.value = data.volume;
+    // loading.value = false;
   });
 </script>
 

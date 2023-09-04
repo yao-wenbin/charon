@@ -132,9 +132,8 @@ import {computed, defineComponent, reactive, ref, toRefs, unref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import components from './components';
 import {NDialogProvider, useDialog, useMessage} from 'naive-ui';
-import {TABS_ROUTES} from '@/store/mutation-types';
-import {useUserStore} from '@/store/modules/user';
-import {useScreenLockStore} from '@/store/modules/screenLock';
+// import {useUserStore} from '@/store/modules/user';
+// import {useScreenLockStore} from '@/store/modules/screenLock';
 import ProjectSetting from './ProjectSetting.vue';
 import {AsideMenu} from '@/layout/components/Menu';
 import {useProjectSetting} from '@/hooks/setting/useProjectSetting';
@@ -152,13 +151,13 @@ export default defineComponent({
       },
     },
     setup(props) {
-      const userStore = useUserStore();
-      const useLockscreen = useScreenLockStore();
+      // const userStore = useUserStore();
+      // const useLockscreen = useScreenLockStore();
       const message = useMessage();
       const dialog = useDialog();
       const { navMode, navTheme, headerSetting, menuSetting, crumbsSetting } = useProjectSetting();
 
-      const { name } = userStore?.info || {};
+      // const { name } = userStore?.info || {};
 
       const drawerSetting = ref();
 
@@ -229,31 +228,31 @@ export default defineComponent({
         });
       };
 
-      // 退出登录
-      const doLogout = () => {
-        dialog.info({
-          title: '提示',
-          content: '您确定要退出登录吗',
-          positiveText: '确定',
-          negativeText: '取消',
-          onPositiveClick: () => {
-            userStore.logout().then(() => {
-              message.success('成功退出登录');
-              // 移除标签页
-              localStorage.removeItem(TABS_ROUTES);
-              router
-                .replace({
-                  name: 'Login',
-                  query: {
-                    redirect: route.fullPath,
-                  },
-                })
-                .finally(() => location.reload());
-            });
-          },
-          onNegativeClick: () => {},
-        });
-      };
+      // // 退出登录
+      // const doLogout = () => {
+      //   dialog.info({
+      //     title: '提示',
+      //     content: '您确定要退出登录吗',
+      //     positiveText: '确定',
+      //     negativeText: '取消',
+      //     onPositiveClick: () => {
+      //       userStore.logout().then(() => {
+      //         message.success('成功退出登录');
+      //         // 移除标签页
+      //         localStorage.removeItem(TABS_ROUTES);
+      //         router
+      //           .replace({
+      //             name: 'Login',
+      //             query: {
+      //               redirect: route.fullPath,
+      //             },
+      //           })
+      //           .finally(() => location.reload());
+      //       });
+      //     },
+      //     onNegativeClick: () => {},
+      //   });
+      // };
 
       // 切换全屏图标
       const toggleFullscreenIcon = () =>
@@ -287,13 +286,13 @@ export default defineComponent({
             click: () => window.open('https://github.com/jekip/naive-ui-admin'),
           },
         },
-        {
-          icon: 'LockOutlined',
-          tips: '锁屏',
-          eventObject: {
-            click: () => useLockscreen.setLock(true),
-          },
-        },
+        // {
+        //   icon: 'LockOutlined',
+        //   tips: '锁屏',
+        //   eventObject: {
+        //     click: () => useLockscreen.setLock(true),
+        //   },
+        // },
       ];
       const avatarOptions = [
         {
@@ -313,7 +312,7 @@ export default defineComponent({
             router.push({ name: 'Setting' });
             break;
           case 2:
-            doLogout();
+            // doLogout();
             break;
         }
       };
@@ -327,7 +326,7 @@ export default defineComponent({
         ...toRefs(state),
         iconList,
         toggleFullScreen,
-        doLogout,
+        // doLogout,
         route,
         dropdownSelect,
         avatarOptions,

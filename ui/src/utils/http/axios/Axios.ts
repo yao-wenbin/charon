@@ -50,6 +50,7 @@ export class VAxios {
    * @description:   请求方法
    */
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    // debugger
     let conf: AxiosRequestConfig = cloneDeep(config);
     const transform = this.getTransform();
 
@@ -61,11 +62,9 @@ export class VAxios {
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }
-
     //这里重新 赋值成最新的配置
     // @ts-ignore
     conf.requestOptions = opt;
-
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
@@ -161,21 +160,21 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // 请求拦截器配置处理
-    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-      const {
-        headers: { ignoreCancelToken },
-      } = config;
-      const ignoreCancel =
-        ignoreCancelToken !== undefined
-          ? ignoreCancelToken
-          : this.options.requestOptions?.ignoreCancelToken;
+    // this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    //   const {
+    //     headers: { ignoreCancelToken },
+    //   } = config;
+    //   const ignoreCancel =
+    //     ignoreCancelToken !== undefined
+    //       ? ignoreCancelToken
+    //       : this.options.requestOptions?.ignoreCancelToken;
 
-      !ignoreCancel && axiosCanceler.addPending(config);
-      if (requestInterceptors && isFunction(requestInterceptors)) {
-        config = requestInterceptors(config, this.options);
-      }
-      return config;
-    }, undefined);
+    //   !ignoreCancel && axiosCanceler.addPending(config);
+    //   if (requestInterceptors && isFunction(requestInterceptors)) {
+    //     config = requestInterceptors(config, this.options);
+    //   }
+    //   return config;
+    // }, undefined);
 
     // 请求拦截器错误捕获
     requestInterceptorsCatch &&

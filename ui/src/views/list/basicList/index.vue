@@ -9,7 +9,7 @@
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
-      :row-key="(row:ListData) => row.id"
+      :row-key="(row:ListData) => row.threadId"
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
@@ -238,20 +238,10 @@ const rules: FormRules = {
           {
             label: '删除',
             onClick: handleDelete.bind(null, record),
-            // 根据业务控制是否显示 isShow 和 auth 是并且关系
-            ifShow: () => {
-              return true;
-            },
-            // 根据权限控制是否显示: 有权限，会显示，支持多个
-            auth: ['basic_list'],
           },
           {
             label: '编辑',
             onClick: handleEdit.bind(null, record),
-            ifShow: () => {
-              return true;
-            },
-            auth: ['basic_list'],
           },
         ],
         dropDownActions: [

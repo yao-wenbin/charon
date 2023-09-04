@@ -87,7 +87,7 @@
 <script lang="ts" setup>
 import {reactive, ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
-import {useUserStore} from '@/store/modules/user';
+// import {useUserStore} from '@/store/modules/user';
 import {useMessage} from 'naive-ui';
 import {ResultEnum} from '@/enums/httpEnum';
 import {LockClosedOutline, LogoFacebook, LogoGithub, PersonOutline} from '@vicons/ionicons5';

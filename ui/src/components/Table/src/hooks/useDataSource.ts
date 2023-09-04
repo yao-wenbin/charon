@@ -76,7 +76,6 @@ export function useDataSource(
       const resultTotal = res[totalField];
       const currentPage = res[pageField];
       const total = res[itemCount];
-      const results = res[listField] ? res[listField] : [];
 
       // 如果数据异常，需获取正确的页码再次执行
       if (resultTotal) {
@@ -89,12 +88,13 @@ export function useDataSource(
           return await fetch(opt);
         }
       }
-      let resultInfo = res[listField] ? res[listField] : [];
+      let list = res[listField] ? res[listField] : [];
       if (afterRequest && isFunction(afterRequest)) {
         // can modify the data returned by the interface for processing
-        resultInfo = (await afterRequest(resultInfo)) || resultInfo;
+        list = (await afterRequest(list)) || list;
       }
-      dataSourceRef.value = resultInfo;
+      dataSourceRef.value = list;
+
       setPagination({
         page: currentPage,
         pageCount: resultTotal,
@@ -106,7 +106,7 @@ export function useDataSource(
         });
       }
       emit('fetch-success', {
-        items: unref(resultInfo),
+        items: unref(list),
         resultTotal,
       });
     } catch (error) {

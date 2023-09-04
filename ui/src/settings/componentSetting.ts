@@ -1,10 +1,10 @@
 export default {
   table: {
     apiSetting: {
-      // 当前页的字段名
+      // 当前页
       pageField: 'page',
-      // 每页数量字段名
-      sizeField: 'pageSize',
+      // 每页数量
+      sizeField: 'size',
       // 接口返回的数据字段名
       listField: 'list',
       // 接口返回总页数字段名
