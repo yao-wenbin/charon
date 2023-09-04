@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server;
+package io.github.yaowenbin.test;
 
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;

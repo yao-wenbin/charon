@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server;
+package io.github.yaowenbin.test;
 
 import org.assertj.core.api.Assertions;
 import org.slf4j.Logger;

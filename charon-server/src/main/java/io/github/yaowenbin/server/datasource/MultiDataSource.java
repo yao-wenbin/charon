@@ -19,12 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MultiDataSource extends AbstractDataSource implements DataSourceMap {
 
     private final Map<String/* DataSourceKey */, Pair<DataSourceMetaProperties, DataSource>> dataSourcePoolMap = new ConcurrentHashMap<>();
-    private final DataSourceConfigurationProperties properties;
-    private final DataSourceCreator creator;
 
     public MultiDataSource(final DataSourceConfigurationProperties properties, final DataSourceCreator creator) {
-        this.properties = properties;
-        this.creator = creator;
         properties.getDatasource().forEach((key, property) -> {
             dataSourcePoolMap.put(key, new Pair<>(property, creator.create(property)));
         });
