@@ -23,6 +23,7 @@ public class DataSourceAutoConfiguration {
 
     private final DataSourceCreator creator;
 
+    // for using autoconfigurationBefore to createDataSource before DruidDataSourceAutoConfigure.
     @Bean
     public DataSource dataSource() {
         return new MultiDataSource(properties, creator);

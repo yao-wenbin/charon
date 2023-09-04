@@ -1,9 +1,9 @@
 package io.github.yaowenbin.server.datasource;
 
+import io.github.yaowenbin.commons.map.Pair;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
-import lombok.RequiredArgsConstructor;
+import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
 import javax.sql.DataSource;
@@ -16,20 +16,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Author yaowenbin
  * @Date 2023/8/23
  */
-@RequiredArgsConstructor
-public class MultiDataSource extends AbstractDataSource implements InitializingBean {
+public class MultiDataSource extends AbstractDataSource implements DataSourceMap {
 
-    private final Map<String/* DataSourceKey */, DataSource> dataSourcePoolMap = new ConcurrentHashMap<>();
+    private final Map<String/* DataSourceKey */, Pair<DataSourceMetaProperties, DataSource>> dataSourcePoolMap = new ConcurrentHashMap<>();
     private final DataSourceConfigurationProperties properties;
     private final DataSourceCreator creator;
 
-    /**
-     * initializing users datasource.
-     */
-    @Override
-    public void afterPropertiesSet() {
+    public MultiDataSource(final DataSourceConfigurationProperties properties, final DataSourceCreator creator) {
+        this.properties = properties;
+        this.creator = creator;
         properties.getDatasource().forEach((key, property) -> {
-            dataSourcePoolMap.put(key, creator.create(property));
+            dataSourcePoolMap.put(key, new Pair<>(property, creator.create(property)));
         });
     }
 
@@ -43,32 +40,36 @@ public class MultiDataSource extends AbstractDataSource implements InitializingB
         return peekOrFirstDataSource().getConnection(username, password);
     }
 
+
+
     public DataSource peekOrFirstDataSource() {
         String peekKey = DataSourceHolder.peek();
         if (Strings.isEmpty(peekKey)) {
             if (dataSourcePoolMap.isEmpty()) {
                 throw new DataSourceException("Please set a datasource in charon-conf.yml");
             } else {
-                return dataSourcePoolMap.values().stream().findFirst().get();
+                return dataSourcePoolMap.values().stream().findFirst().get().val();
             }
         }
-        return getDataSource(peekKey);
+        return get(peekKey);
     }
 
     public DataSource peekDataSource() {
-        return getDataSource(DataSourceHolder.peek());
+        return get(DataSourceHolder.peek());
     }
 
-    public DataSource getDataSource(String key) {
-        DataSource ds = dataSourcePoolMap.get(key);
+    @Override
+    public Map<String, Pair<DataSourceMetaProperties, DataSource>> dataSourceMap() {
+        return dataSourcePoolMap;
+    }
+
+    @Override
+    public DataSource get(String key) {
+        DataSource ds = dataSourcePoolMap.get(key).val();
         if (ds == null) {
             throw new DataSourceException("cannot get DataSource by key: " + key);
         }
         return ds;
-    }
-
-    public void addDataSource(String key, DataSource dataSource) {
-        dataSourcePoolMap.put(key, dataSource);
     }
 
     public void removeDataSource(String key) {

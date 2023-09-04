@@ -17,7 +17,7 @@ class MultiDataSourceTest extends SpringContextTest {
     @Test
     void afterPropertiesSet() {
         // db1 come from charon-conf.yml
-        assertThat(dataSource.getDataSource("db1")).isNotNull();
+        assertThat(dataSource.get("db1")).isNotNull();
     }
 
     @Test
