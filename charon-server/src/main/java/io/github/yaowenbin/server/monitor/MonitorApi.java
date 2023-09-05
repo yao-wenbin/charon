@@ -15,7 +15,7 @@ public class MonitorApi {
 
     private final MonitorService monitorService;
 
-    @GetMapping("/list")
+    @GetMapping("/monitor/list")
     public R<Map> listApi() {
         Map<Object, Object> data = Maps.builder().put("page", 1).put("size", 10).put("pageCount", 10).put("itemCount", 99).put("list", monitorService.listUnindexedSql()).build();
         return R.success(data);

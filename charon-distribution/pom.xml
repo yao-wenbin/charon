@@ -49,7 +49,7 @@
                 <configuration>
                     <nodeVersion>v18.17.1</nodeVersion>
                     <yarnVersion>v1.22.11</yarnVersion>
-                    <workingDirectory>../ui</workingDirectory>
+                    <workingDirectory>../charon-ui</workingDirectory>
                     <!-- 若不方便访问官网，可使用国内淘宝镜像-->
                     <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
                     <npmDownloadRoot>https://registry.npm.taobao.org/npm/</npmDownloadRoot>
@@ -104,7 +104,7 @@
                             <resources>
                                 <resource>
                                     <!--项目中需要复制的文件路径-->
-                                    <directory>../ui/dist/</directory>
+                                    <directory>../charon-ui/dist/</directory>
                                     <includes>**/**.*</includes>
                                     <excludes>
                                         <exclude>index.html</exclude>
@@ -126,7 +126,7 @@
                             <resources>
                                 <resource>
                                     <!--项目中需要复制的文件路径-->
-                                    <directory>../ui/dist/</directory>
+                                    <directory>../charon-ui/dist/</directory>
                                     <includes>index.html</includes>
                                 </resource>
                             </resources>
