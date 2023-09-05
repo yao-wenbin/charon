@@ -17,17 +17,17 @@
           <n-gi>
             <div class="flex justify-end w-full">
               <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">项目数</span>
-                <span class="text-2xl">16</span>
+                <span class="text-secondary">数据库</span>
+                <span class="text-2xl">{{ statistics.datasourceCount }}</span>
               </div>
               <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">待办</span>
-                <span class="text-2xl">3/15</span>
+                <span class="text-secondary">连接数</span>
+                <span class="text-2xl">{{ statistics.connectionCount }}</span>
               </div>
-              <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">消息</span>
-                <span class="text-2xl">35</span>
-              </div>
+<!--              <div class="flex flex-col justify-center flex-1 text-right">-->
+<!--                <span class="text-secondary">消息</span>-->
+<!--                <span class="text-2xl">35</span>-->
+<!--              </div>-->
             </div>
           </n-gi>
         </n-grid>
@@ -48,6 +48,7 @@
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
+              @click="routerToMonitorCompose(datasource.key)"
             >
               <div class="flex">
                 <span>
@@ -317,24 +318,14 @@
   </div>
 </template>
 
-<script lang="js">
-  import {datasourcesApi} from "@/api/datasource/datasource";
-
+<script lang="ts">
   export default {
     name: 'DashboardWorkplace',
-    data() {
-      return {
-        datasources: [],
-      }
-    },
-    async mounted() {
-      this.datasources = await datasourcesApi();
-    }
 
 };
 </script>
 
-<script lang="js" setup>
+<script lang="ts" setup>
   import schoolboy from '@/assets/images/schoolboy.png';
   import {
     GithubOutlined,
@@ -346,8 +337,29 @@
     Html5Outlined,
   } from '@vicons/antd';
   import { LogoVue, LogoAngular, LogoReact, LogoJavascript } from '@vicons/ionicons5';
-  import {onMounted} from 'vue';
   import {datasourcesApi} from "@/api/datasource/datasource";
+  import {useDbStore} from "@/store/datasource";
+  import {onMounted, ref} from 'vue';
+  import {useRouter} from 'vue-router';
+  import {statisticsIndexApi} from "@/api/statistics";
+
+  const datasources = ref([]);
+  const statistics = ref({});
+
+  onMounted(async () => {
+    datasources.value = await datasourcesApi();
+    statistics.value = await statisticsIndexApi();
+  });
+
+  const router = useRouter()
+  const dbStore = useDbStore();
+
+  const routerToMonitorCompose = (key) => {
+    dbStore.setDb(key);
+    router.push({name: 'List'})
+  }
+
+
 </script>
 
 <style lang="less" scoped>
