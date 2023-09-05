@@ -1,7 +1,7 @@
 package io.github.yaowenbin.server.autoconfiguration;
 
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
-import io.github.yaowenbin.server.datasource.core.DataSourceCreator;
+import io.github.yaowenbin.server.datasource.core.DataSourceFactory;
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -21,12 +21,10 @@ public class DataSourceAutoConfiguration {
 
     private final DataSourceConfigurationProperties properties;
 
-    private final DataSourceCreator creator;
-
     // for using autoconfigurationBefore to createDataSource before DruidDataSourceAutoConfigure.
     @Bean
     public DataSource dataSource() {
-        return new MultiDataSource(properties, creator);
+        return new MultiDataSource(properties);
     }
 
 }

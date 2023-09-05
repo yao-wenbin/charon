@@ -1,14 +1,12 @@
 package io.github.yaowenbin.server.datasource.core;
 
-import io.github.yaowenbin.commons.map.Pair;
+import com.alibaba.druid.pool.DruidDataSource;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,38 +17,37 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MultiDataSource extends AbstractDataSource implements DataSourceMap {
 
-    private final Map<String/* DataSourceKey */, Pair<DataSourceMetaProperties, DataSource>> dataSourcePoolMap = new ConcurrentHashMap<>();
+    private final Map<String/* DataSourceKey */, DataSource> dataSourcePoolMap = new ConcurrentHashMap<>();
 
-    public MultiDataSource(final DataSourceConfigurationProperties properties, final DataSourceCreator creator) {
-        properties.getDatasource().forEach((key, property) -> {
-            dataSourcePoolMap.put(key, new Pair<>(property, creator.create(property)));
-        });
+    public MultiDataSource(final DataSourceConfigurationProperties properties) {
+        properties.getDatasource().forEach((key, property) ->
+            dataSourcePoolMap.put(key, DataSourceFactory.build(property))
+        );
     }
 
     @Override
     public Connection getConnection() {
-        Pair<DataSourceMetaProperties, DataSource> pair = peekOrFirstDataSource();
+        DataSource dataSource = peekOrFirstDataSource();
         try {
-            return pair.val().getConnection();
+            return dataSource.getConnection();
             // it's need to cooperate with druid's max wait time to catch cannot connection timeout.
         } catch (Exception e) {
-            throw new DataSourceException("cannot connection datasource:{}", pair.key().getUrl());
+            throw new DataSourceException("cannot connection datasource:{}", ((DruidDataSource)dataSource).getUrl());
         }
     }
 
     @Override
     public Connection getConnection(String username, String password) {
-        Pair<DataSourceMetaProperties, DataSource> pair = peekOrFirstDataSource();
+        DataSource dataSource = peekOrFirstDataSource();
         try {
-            return pair.val().getConnection(username, password);
-        } catch (SQLException e) {
-            throw new DataSourceException("cannot connection datasource:{}", pair.key().getUrl());
+            return dataSource.getConnection(username, password);
+            // it's need to cooperate with druid's max wait time to catch cannot connection timeout.
+        } catch (Exception e) {
+            throw new DataSourceException("cannot connection datasource:{}", ((DruidDataSource)dataSource).getUrl());
         }
     }
 
-
-
-    public Pair<DataSourceMetaProperties, DataSource> peekOrFirstDataSource() {
+    public DataSource peekOrFirstDataSource() {
         String peekKey = DataSourceHolder.peek();
         if (Strings.isEmpty(peekKey)) {
             if (dataSourcePoolMap.isEmpty()) {
@@ -59,27 +56,19 @@ public class MultiDataSource extends AbstractDataSource implements DataSourceMap
                 return dataSourcePoolMap.values().stream().findFirst().get();
             }
         }
-        return getPair(peekKey);
-    }
-
-    public DataSource peekDataSource() {
-        return get(DataSourceHolder.peek());
+        return get(peekKey);
     }
 
     @Override
-    public Map<String, Pair<DataSourceMetaProperties, DataSource>> dataSourceMap() {
+    public Map<String, DataSource> dataSourceMap() {
         return dataSourcePoolMap;
     }
 
     @Override
     public DataSource get(String key) {
         return Optional.ofNullable(dataSourcePoolMap.get(key))
-                .map(Pair::val)
                 .orElseThrow(() -> new DataSourceException("cannot get DataSource by key: " + key));
     }
 
-    public Pair<DataSourceMetaProperties, DataSource> getPair(String key) {
-        return dataSourcePoolMap.get(key);
-    }
 
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface DataSourceMap {
 
-    Map<String, Pair<DataSourceMetaProperties, DataSource>> dataSourceMap();
+    Map<String, DataSource> dataSourceMap();
 
     DataSource get(String key);
 

@@ -1,5 +1,6 @@
 package io.github.yaowenbin.server.datasource.api;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import io.github.yaowenbin.commons.list.Lists;
 import io.github.yaowenbin.commons.map.Pair;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
@@ -20,11 +21,11 @@ public class DataSourceMetaDTO {
 
     private final String url;
 
-    public static Collection<DataSourceMetaDTO> transferFrom(Map<String, Pair<DataSourceMetaProperties, DataSource>> datasourceMap) {
+    public static Collection<DataSourceMetaDTO> transferFrom(Map<String,  DataSource> datasourceMap) {
         List<DataSourceMetaDTO> res = Lists.newArrayList();
-        datasourceMap.forEach((dbName, pair) -> {
-            DataSourceMetaProperties metaProperty = pair.key();
-            res.add(new DataSourceMetaDTO(dbName, metaProperty.getUsername(), metaProperty.getUrl()));
+        datasourceMap.forEach((dbName, ds) -> {
+            DruidDataSource druid = (DruidDataSource) ds;
+            res.add(new DataSourceMetaDTO(dbName, druid.getUsername(), druid.getRawJdbcUrl()));
         });
         return res;
     }

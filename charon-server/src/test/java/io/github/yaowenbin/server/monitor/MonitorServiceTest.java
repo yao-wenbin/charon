@@ -1,5 +1,6 @@
 package io.github.yaowenbin.server.monitor;
 
+import io.github.yaowenbin.server.IntegrationTest;
 import io.github.yaowenbin.server.SpringContextTest;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @Author yaowenbin
  * @Date 2023/8/23
  */
-public class MonitorServiceTest extends SpringContextTest {
+public class MonitorServiceTest extends IntegrationTest {
 
     @Resource
     MonitorService monitorService;

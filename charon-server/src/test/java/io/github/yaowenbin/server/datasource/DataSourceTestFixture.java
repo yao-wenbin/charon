@@ -3,13 +3,11 @@ package io.github.yaowenbin.server.datasource;
 import io.github.yaowenbin.commons.map.Maps;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
-import io.github.yaowenbin.server.datasource.core.DataSourceCreator;
+import io.github.yaowenbin.server.datasource.core.DataSourceFactory;
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 
 
 public class DataSourceTestFixture {
-
-    public static DataSourceCreator creator = new DataSourceCreator();
 
     public static DataSourceMetaProperties dataSourceMetaProperties = new DataSourceMetaProperties()
             .setUrl("jdbc:mysql://127.0.0.1:3306/charon")
@@ -19,7 +17,7 @@ public class DataSourceTestFixture {
     public static DataSourceConfigurationProperties configurationProperties = new DataSourceConfigurationProperties()
             .setDatasource(Maps.<String, DataSourceMetaProperties>builder().put("db1", dataSourceMetaProperties).build());
 
-    public static MultiDataSource multiDataSource = new MultiDataSource(configurationProperties, creator);
+    public static MultiDataSource multiDataSource = new MultiDataSource(configurationProperties);
 
     public static DataSourceMetaProperties mockMetaProperties() {
         return dataSourceMetaProperties;

@@ -14,27 +14,33 @@ import java.sql.SQLException;
  * @Date 2023/8/22
  * to convert datasource property to real druid datasource.
  */
-@Component
 @Slf4j
-public class DataSourceCreator {
+public class DataSourceFactory {
 
-    public DataSource create(DataSourceMetaProperties property) {
-        DruidDataSource druid = new DruidDataSource();
+    private static final DruidDataSource templateDataSource;
+
+    static {
+        templateDataSource = new DruidDataSource();
+        templateDataSource.setMaxActive(1);
+        templateDataSource.setTestWhileIdle(true);
+        templateDataSource.setConnectionErrorRetryAttempts(0);
+        templateDataSource.setMaxWait(2000);
+        // stop druid try connection after connection failure.
+        templateDataSource.setBreakAfterAcquireFailure(true);
+        templateDataSource.setAsyncInit(true);
+    }
+
+    public static DataSource build(DataSourceMetaProperties property) {
+        DruidDataSource druid = templateDataSource.cloneDruidDataSource();
         druid.setUsername(property.getUsername());
         druid.setPassword(property.getPassword());
         druid.setUrl(property.getUrl());
-        druid.setConnectionErrorRetryAttempts(0);
-        druid.setMaxWait(2000);
-        // stop druid try connection after connection failure.
-        druid.setBreakAfterAcquireFailure(true);
-        druid.setAsyncInit(true);
         try {
             druid.init();
             druid.getConnection();
         } catch (SQLException e) {
             log.warn("druid initial error: ", e);
         }
-
         return druid;
     }
 
