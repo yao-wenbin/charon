@@ -11,7 +11,6 @@ class StatisticsApiTest extends SpringContextTest {
 
     @Test
     void statisticsIndexApi() throws Exception {
-        Thread.sleep(3000L);
         mvc.perform(get("/statistic/index"))
                 .andDo(print())
                 .andExpect(jsonPath("$.data.datasourceCount").isNumber())
