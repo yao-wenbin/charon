@@ -1,7 +1,7 @@
 package io.github.yaowenbin.server.autoconfiguration;
 
 import io.github.yaowenbin.server.SpringContextTest;
-import io.github.yaowenbin.server.datasource.MultiDataSource;
+import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
 

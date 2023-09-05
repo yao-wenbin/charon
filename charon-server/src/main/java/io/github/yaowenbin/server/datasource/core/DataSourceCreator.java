@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server.datasource;
+package io.github.yaowenbin.server.datasource.core;
 
 
 import com.alibaba.druid.pool.DruidDataSource;

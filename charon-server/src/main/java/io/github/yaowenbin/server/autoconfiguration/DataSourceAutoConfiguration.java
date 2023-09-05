@@ -1,8 +1,8 @@
 package io.github.yaowenbin.server.autoconfiguration;
 
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
-import io.github.yaowenbin.server.datasource.DataSourceCreator;
-import io.github.yaowenbin.server.datasource.MultiDataSource;
+import io.github.yaowenbin.server.datasource.core.DataSourceCreator;
+import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;

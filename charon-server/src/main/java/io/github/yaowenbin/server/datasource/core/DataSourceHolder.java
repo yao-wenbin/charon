@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server.datasource;
+package io.github.yaowenbin.server.datasource.core;
 
 import io.github.yaowenbin.commons.obj.Objs;
 import io.github.yaowenbin.server.core.Strings;

@@ -1,13 +1,12 @@
-package io.github.yaowenbin.server.datasource;
+package io.github.yaowenbin.server.datasource.core;
 
-import io.github.yaowenbin.commons.map.Pair;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
+import io.github.yaowenbin.server.datasource.api.DataSourceMetaDTO;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 
 /**
@@ -25,8 +24,8 @@ public class DataSourceService {
         this.dataSource = multiDataSource;
     }
 
-    public Collection<DataSourceMetaProperties> collection() {
-        return dataSource.dataSourceMap().values().stream().map(Pair::key).collect(Collectors.toList());
+    public Collection<DataSourceMetaDTO> collection() {
+        return DataSourceMetaDTO.transferFrom(dataSource.dataSourceMap());
     }
 
 }

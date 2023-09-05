@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server.datasource;
+package io.github.yaowenbin.server.datasource.core;
 
 import io.github.yaowenbin.commons.map.Pair;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;

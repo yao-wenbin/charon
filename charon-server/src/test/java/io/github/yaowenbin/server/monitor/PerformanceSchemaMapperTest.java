@@ -1,7 +1,7 @@
 package io.github.yaowenbin.server.monitor;
 
 import io.github.yaowenbin.server.SpringContextTest;
-import io.github.yaowenbin.server.datasource.DataSourceHolder;
+import io.github.yaowenbin.server.datasource.core.DataSourceHolder;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
