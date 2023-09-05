@@ -9,7 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * @Author yaowenbin
  * @Date 2023/8/24
  */
-@TestPropertySource(properties = {"spring.config.location= classpath:charon-conf.yml"})
+@TestPropertySource(properties = {"spring.config.additional-location= classpath:charon-conf.yml"})
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class SpringContextTest extends UnitTest{
