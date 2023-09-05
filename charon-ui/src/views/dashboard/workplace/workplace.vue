@@ -44,6 +44,25 @@
         >
           <div class="flex flex-wrap project-card">
             <n-card
+              v-for="datasource in datasources"
+              size="small"
+              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
+              hoverable
+            >
+              <div class="flex">
+                <span>
+                  <n-icon size="30">
+                    <GithubOutlined />
+                  </n-icon>
+                </span>
+                <span class="ml-4 text-lg">{{ datasource.url }}</span>
+              </div>
+              <div class="flex h-10 mt-2 text-gray-400">
+                url: {{datasource.url}}
+              </div>
+              <div class="flex h-10 mt-2 text-gray-400"> User: {{ datasource.username }} </div>
+            </n-card>
+            <n-card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -298,11 +317,25 @@
   </div>
 </template>
 
-<script lang="ts">
-  export default { name: 'DashboardWorkplace' };
+<script lang="js">
+  import {datasourcesApi} from "@/api/datasource/datasource";
+
+  export default {
+    name: 'DashboardWorkplace',
+    data() {
+      return {
+        datasources: [],
+      }
+    },
+    async mounted() {
+      const data = await datasourcesApi();
+      this.datasources = data.datasource
+    }
+
+};
 </script>
 
-<script lang="ts" setup>
+<script lang="js" setup>
   import schoolboy from '@/assets/images/schoolboy.png';
   import {
     GithubOutlined,
@@ -314,6 +347,8 @@
     Html5Outlined,
   } from '@vicons/antd';
   import { LogoVue, LogoAngular, LogoReact, LogoJavascript } from '@vicons/ionicons5';
+  import {onMounted} from 'vue';
+  import {datasourcesApi} from "@/api/datasource/datasource";
 </script>
 
 <style lang="less" scoped>

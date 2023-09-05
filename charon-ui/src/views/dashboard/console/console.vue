@@ -225,7 +225,6 @@
 </template>
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
-import {getConsoleInfo} from '@/api/dashboard/console';
 import VisiTab from './components/VisiTab.vue';
 import {CountTo} from '@/components/CountTo/index';
 import {
@@ -241,7 +240,7 @@ import {
   UsergroupAddOutlined,
 } from '@vicons/antd';
 
-const loading = ref(true);
+  const loading = ref(true);
   const visits = ref<any>({});
   const saleroom = ref<any>({});
   const orderLarge = ref<any>({});
@@ -324,8 +323,6 @@ const loading = ref(true);
   ];
 
   onMounted(async () => {
-    const data = await getConsoleInfo();
-    console.log(data)
     // visits.value = data.visits;
     // saleroom.value = data.saleroom;
     // orderLarge.value = data.orderLarge;
