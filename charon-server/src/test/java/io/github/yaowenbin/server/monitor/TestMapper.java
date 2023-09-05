@@ -1,9 +1,10 @@
 package io.github.yaowenbin.server.monitor;
 
-import com.mybatisflex.core.BaseMapper;
 import lombok.Data;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -11,7 +12,10 @@ import java.util.Date;
  * @Date 2023/8/24
  */
 @Mapper
-public interface TestMapper extends BaseMapper<Test> {
+public interface TestMapper {
+
+    @Select("select * from test")
+    Collection<Test> selectAll();
 
 }
 

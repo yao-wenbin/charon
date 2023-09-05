@@ -35,7 +35,7 @@
         <spring-boot.version>2.7.13</spring-boot.version>
         <testcontainers.version>1.18.3</testcontainers.version>
         <druid.version>1.2.18</druid.version>
-        <mybatis-flex.version>1.5.8</mybatis-flex.version>
+        <mybatis.version>2.3.1</mybatis.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
         <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
     </properties>
@@ -70,9 +70,9 @@
 
             <!-- for orm -->
             <dependency>
-                <groupId>com.mybatis-flex</groupId>
-                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-                <version>${mybatis-flex.version}</version>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
 
             <!--    for using container to integration test-->
