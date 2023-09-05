@@ -82,8 +82,4 @@ public class MultiDataSource extends AbstractDataSource implements DataSourceMap
         return dataSourcePoolMap.get(key);
     }
 
-    public void removeDataSource(String key) {
-        dataSourcePoolMap.remove(key);
-    }
-
 }

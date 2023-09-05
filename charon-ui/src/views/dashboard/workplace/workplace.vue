@@ -55,12 +55,12 @@
                     <GithubOutlined />
                   </n-icon>
                 </span>
-                <span class="ml-4 text-lg">{{ datasource.url }}</span>
+                <span class="ml-4 text-lg">{{ datasource.key }}</span>
               </div>
               <div class="flex h-10 mt-2 text-gray-400">
                 url: {{datasource.url}}
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> User: {{ datasource.username }} </div>
+              <div class="flex h-10 mt-2 text-gray-400"> user: {{ datasource.username }} </div>
             </n-card>
             <n-card
               size="small"
@@ -328,8 +328,7 @@
       }
     },
     async mounted() {
-      const data = await datasourcesApi();
-      this.datasources = data.datasource
+      this.datasources = await datasourcesApi();
     }
 
 };

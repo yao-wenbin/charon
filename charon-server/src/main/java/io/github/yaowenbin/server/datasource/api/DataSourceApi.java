@@ -17,8 +17,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class DataSourceApi{
 
-    private final DataSourceConfigurationProperties dataSourceProperties;
-
     private final DataSourceService dataSourceService;
 
     @GetMapping("/datasources")

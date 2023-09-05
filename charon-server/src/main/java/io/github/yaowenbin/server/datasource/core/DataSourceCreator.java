@@ -26,12 +26,10 @@ public class DataSourceCreator {
         druid.setMaxWait(2000);
         // stop druid try connection after connection failure.
         druid.setBreakAfterAcquireFailure(true);
-        if (Boolean.FALSE.equals(property.getLazy())) {
-            try {
-                druid.init();
-            } catch (SQLException e) {
-                throw new DataSourceException("druid initial error",e);
-            }
+        try {
+            druid.init();
+        } catch (SQLException e) {
+            throw new DataSourceException("druid initial error",e);
         }
 
         return druid;
