@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -19,10 +20,10 @@ public class DataSourceApiTest extends SpringContextTest {
 
     @Test
     void collection() throws Exception {
-        assertThat(mvc).isNotNull();
         mvc.perform(get("/datasources"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.datasource.db1.url").value("jdbc:mysql://127.0.0.1:3306/charon"));
     }
 
 }

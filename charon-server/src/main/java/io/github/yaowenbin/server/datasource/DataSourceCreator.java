@@ -21,7 +21,11 @@ public class DataSourceCreator {
         druid.setUsername(property.getUsername());
         druid.setPassword(property.getPassword());
         druid.setUrl(property.getUrl());
-
+        druid.setAsyncInit(true);
+        druid.setConnectionErrorRetryAttempts(0);
+        druid.setMaxWait(2000);
+        // stop druid try connection after connection failure.
+        druid.setBreakAfterAcquireFailure(true);
         if (Boolean.FALSE.equals(property.getLazy())) {
             try {
                 druid.init();
@@ -29,6 +33,7 @@ public class DataSourceCreator {
                 throw new DataSourceException("druid initial error",e);
             }
         }
+
         return druid;
     }
 

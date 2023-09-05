@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,27 +28,38 @@ public class MultiDataSource extends AbstractDataSource implements DataSourceMap
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
-        return peekOrFirstDataSource().getConnection();
+    public Connection getConnection() {
+        Pair<DataSourceMetaProperties, DataSource> pair = peekOrFirstDataSource();
+        try {
+            return pair.val().getConnection();
+            // it's need to cooperate with druid's max wait time to catch cannot connection timeout.
+        } catch (Exception e) {
+            throw new DataSourceException("cannot connection datasource:{}", pair.key().getUrl());
+        }
     }
 
     @Override
-    public Connection getConnection(String username, String password) throws SQLException {
-        return peekOrFirstDataSource().getConnection(username, password);
+    public Connection getConnection(String username, String password) {
+        Pair<DataSourceMetaProperties, DataSource> pair = peekOrFirstDataSource();
+        try {
+            return pair.val().getConnection(username, password);
+        } catch (SQLException e) {
+            throw new DataSourceException("cannot connection datasource:{}", pair.key().getUrl());
+        }
     }
 
 
 
-    public DataSource peekOrFirstDataSource() {
+    public Pair<DataSourceMetaProperties, DataSource> peekOrFirstDataSource() {
         String peekKey = DataSourceHolder.peek();
         if (Strings.isEmpty(peekKey)) {
             if (dataSourcePoolMap.isEmpty()) {
                 throw new DataSourceException("Please set a datasource in charon-conf.yml");
             } else {
-                return dataSourcePoolMap.values().stream().findFirst().get().val();
+                return dataSourcePoolMap.values().stream().findFirst().get();
             }
         }
-        return get(peekKey);
+        return getPair(peekKey);
     }
 
     public DataSource peekDataSource() {
@@ -61,11 +73,13 @@ public class MultiDataSource extends AbstractDataSource implements DataSourceMap
 
     @Override
     public DataSource get(String key) {
-        DataSource ds = dataSourcePoolMap.get(key).val();
-        if (ds == null) {
-            throw new DataSourceException("cannot get DataSource by key: " + key);
-        }
-        return ds;
+        return Optional.ofNullable(dataSourcePoolMap.get(key))
+                .map(Pair::val)
+                .orElseThrow(() -> new DataSourceException("cannot get DataSource by key: " + key));
+    }
+
+    public Pair<DataSourceMetaProperties, DataSource> getPair(String key) {
+        return dataSourcePoolMap.get(key);
     }
 
     public void removeDataSource(String key) {

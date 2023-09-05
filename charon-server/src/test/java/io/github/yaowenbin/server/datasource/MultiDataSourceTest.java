@@ -1,6 +1,7 @@
 package io.github.yaowenbin.server.datasource;
 
 import io.github.yaowenbin.server.SpringContextTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
@@ -21,8 +22,14 @@ class MultiDataSourceTest extends SpringContextTest {
     }
 
     @Test
-    void getConnection() {
-        DataSourceHolder.push("");
+    void get_shouldThrowException_whenGetUnknownDS() {
+        Assertions.assertThrows(DataSourceException.class, () -> dataSource.get("db9999"));
+    }
+
+    @Test
+    void get_shouldThrowException_whenGetDSCannotConnection() {
+        DataSourceHolder.push("db2");
+        Assertions.assertThrows(DataSourceException.class, () -> dataSource.getConnection());
     }
 
     @Test
