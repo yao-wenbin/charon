@@ -65,7 +65,7 @@
 import {h, reactive, ref} from 'vue';
 import {BasicTable, TableAction} from '@/components/Table';
 import {BasicForm, FormSchema, useForm} from '@/components/Form/index';
-import {getTableList} from '@/api/table/list';
+import {unindexedSqlAp} from '@/api/monitor';
 import {columns, ListData} from './columns';
 import {PlusOutlined} from '@vicons/antd';
 import {useRouter} from 'vue-router';
@@ -279,7 +279,7 @@ const rules: FormRules = {
   }
 
   const loadDataTable = async (res) => {
-    return await getTableList({ ...getFieldsValue(), ...res });
+    return await unindexedSqlAp({ ...getFieldsValue(), ...res });
   };
 
   function onCheckedRow(rowKeys) {
