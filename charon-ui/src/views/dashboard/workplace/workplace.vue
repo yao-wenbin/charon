@@ -337,7 +337,7 @@
     Html5Outlined,
   } from '@vicons/antd';
   import { LogoVue, LogoAngular, LogoReact, LogoJavascript } from '@vicons/ionicons5';
-  import {datasourcesApi} from "@/api/datasource/datasource";
+  import {datasourcesApi} from "@/api/datasource";
   import {useDbStore} from "@/store/datasource";
   import {onMounted, ref} from 'vue';
   import {useRouter} from 'vue-router';
