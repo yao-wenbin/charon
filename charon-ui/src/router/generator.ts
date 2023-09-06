@@ -1,4 +1,3 @@
-import {adminMenus} from '@/api/system/menu';
 import {constantRouterIcon} from './icons';
 import {RouteRecordRaw} from 'vue-router';
 import {Layout, ParentLayout} from '@/router/constant';
@@ -54,7 +53,7 @@ export const generateRoutes = (routerMap, parent?): any[] => {
  * @returns {Promise<Router>}
  */
 export const generateDynamicRoutes = async (): Promise<RouteRecordRaw[]> => {
-  const result = await adminMenus();
+  const result = [];
   const router = generateRoutes(result);
   asyncImportRoute(router);
   return router;
