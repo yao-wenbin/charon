@@ -44,7 +44,7 @@
         >
           <div class="flex flex-wrap project-card">
             <n-card
-              v-for="datasource in datasources"
+              v-for="datasource in dbStore.collection"
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -321,7 +321,6 @@
 <script lang="ts">
   export default {
     name: 'DashboardWorkplace',
-
 };
 </script>
 
@@ -343,20 +342,20 @@
   import {useRouter} from 'vue-router';
   import {statisticsIndexApi} from "@/api/statistics";
 
-  const datasources = ref([]);
   const statistics = ref({});
-
-  onMounted(async () => {
-    datasources.value = await datasourcesApi();
-    statistics.value = await statisticsIndexApi();
-  });
 
   const router = useRouter()
   const dbStore = useDbStore();
 
+  onMounted(async () => {
+    dbStore.setCollection(await datasourcesApi());
+    statistics.value = await statisticsIndexApi();
+  });
+
+
+
   const routerToMonitorCompose = (key) => {
-    dbStore.setDb(key);
-    router.push({name: 'List'})
+    router.push({path: `/list/basic-list/${key}`})
   }
 
 

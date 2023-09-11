@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'basic-list',
+        path: 'basic-list/:key?',
         name: 'basic-list',
         meta: {
           title: '基础列表',
