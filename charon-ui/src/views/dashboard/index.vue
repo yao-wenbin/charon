@@ -182,6 +182,7 @@
 
   onMounted(async () => {
     dbStore.setCollection(await datasourcesApi());
+    console.log("set db collection", dbStore.getKeys)
     statistics.value = await statisticsIndexApi();
   });
 

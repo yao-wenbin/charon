@@ -8,3 +8,11 @@ export function unindexedSqlAp(params) {
     params
   });
 }
+
+
+export function mysqlThreadsApi() {
+  return http.request({
+    url: '/monitor/mysql-threads',
+    method: 'get',
+  });
+}

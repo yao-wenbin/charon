@@ -65,15 +65,13 @@
 import {h, reactive, ref} from 'vue';
 import {BasicTable, TableAction} from '@/components/Table';
 import {BasicForm, FormSchema, useForm} from '@/components/Form/index';
-import {unindexedSqlAp} from '@/api/monitor';
+import {mysqlThreadsApi, unindexedSqlAp} from '@/api/monitor';
 import {columns, ListData} from './columns';
 import {PlusOutlined} from '@vicons/antd';
 import {useRouter, useRoute} from 'vue-router';
-import {type FormRules} from 'naive-ui';
 import {useDbStore} from "@/store/datasource";
 
 const dbStore = useDbStore()
-
 
 const schemas: FormSchema[] = [
   {
@@ -87,102 +85,6 @@ const schemas: FormSchema[] = [
       },
     },
   },
-  {
-    field: 'type',
-    component: 'NSelect',
-    label: '类型',
-    componentProps: {
-      placeholder: '请选择类型',
-      options: [
-        {
-          label: '舒适性',
-          value: 1,
-        },
-        {
-          label: '经济性',
-          value: 2,
-        },
-      ],
-      onUpdateValue: (e: any) => {
-        console.log(e);
-      },
-    },
-  },
-  {
-    field: 'makeDate',
-    component: 'NDatePicker',
-    label: '预约时间',
-    defaultValue: 1183135260000,
-    componentProps: {
-      type: 'date',
-      clearable: true,
-      onUpdateValue: (e: any) => {
-        console.log(e);
-      },
-    },
-  },
-  {
-    field: 'makeTime',
-    component: 'NTimePicker',
-    label: '停留时间',
-    componentProps: {
-      clearable: true,
-      onUpdateValue: (e: any) => {
-        console.log(e);
-      },
-    },
-  },
-  {
-    field: 'status',
-    label: '状态',
-    //插槽
-    slot: 'statusSlot',
-  },
-  {
-    field: 'makeProject',
-    component: 'NCheckbox',
-    label: '预约项目',
-    componentProps: {
-      placeholder: '请选择预约项目',
-      options: [
-        {
-          label: '种牙',
-          value: 1,
-        },
-        {
-          label: '补牙',
-          value: 2,
-        },
-        {
-          label: '根管',
-          value: 3,
-        },
-      ],
-      onUpdateChecked: (e: any) => {
-        console.log(e);
-      },
-    },
-  },
-  {
-    field: 'makeSource',
-    component: 'NRadioGroup',
-    label: '来源',
-    componentProps: {
-      options: [
-        {
-          label: '网上',
-          value: 1,
-        },
-        {
-          label: '门店',
-          value: 2,
-        },
-      ],
-      onUpdateChecked: (e: any) => {
-        console.log(e);
-      },
-    },
-  },
 ];
 
 const [register, { getFieldsValue }, formData] = useForm({
@@ -190,26 +92,6 @@ const [register, { getFieldsValue }, formData] = useForm({
   labelWidth: 80,
   schemas,
 });
-console.log(formData)
-// const rules: FormRules = {
-//     name: {
-//       required: true,
-//       trigger: ['blur', 'input'],
-//       message: '请输入名称',
-//     },
-//     address: {
-//       required: true,
-//       trigger: ['blur', 'input'],
-//       message: '请输入地址',
-//     },
-//     date: {
-//       type: 'number',
-//       required: true,
-//       trigger: ['blur', 'change'],
-//       message: '请选择日期',
-//     },
-//   };
-
 
 
   const router = useRouter();
@@ -279,6 +161,7 @@ console.log(formData)
   }
 
   const loadDataTable = async (res) => {
+    await mysqlThreadsApi();
     return await unindexedSqlAp({ ...getFieldsValue(), ...res });
   };
 

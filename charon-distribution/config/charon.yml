@@ -4,8 +4,3 @@ datasource:
     password: root
     # TODO Using Simple url and warp in DataSourceProperty
     url: jdbc:mysql://127.0.0.1:3306/charon
-  db2:
-    username: root
-    password: root
-    # TODO Using Simple url and warp in DataSourceProperty
-    url: jdbc:mysql://127.0.0.1:19999/order

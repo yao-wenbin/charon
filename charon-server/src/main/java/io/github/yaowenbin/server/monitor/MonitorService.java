@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +18,12 @@ public class MonitorService {
 
     private final PerformanceSchemaMapper mapper;
 
-    public List<UnindexedSql> listUnindexedSql() {
-        return mapper.listNoIndexUsedSql(NoIndexUsedSqlReq.EMPTY);
+    public Collection<UnindexedSql> listUnindexedSql() {
+        List<UnindexedSql> unindexedSqls = mapper.listNoIndexUsedSql();
+        return unindexedSqls;
+    }
+
+    public Collection<MysqlThread> collectMysqlThreads() {
+        return mapper.listMysqlThread();
     }
 }
