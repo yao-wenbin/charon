@@ -21,10 +21,11 @@ public class DataSourceFactory {
 
     static {
         templateDataSource = new DruidDataSource();
-        templateDataSource.setMaxActive(1);
+        templateDataSource.setMaxActive(10);
         templateDataSource.setTestWhileIdle(true);
         templateDataSource.setConnectionErrorRetryAttempts(0);
         templateDataSource.setMaxWait(2000);
+        templateDataSource.setInitialSize(1);
         // stop druid try connection after connection failure.
         templateDataSource.setBreakAfterAcquireFailure(true);
         templateDataSource.setAsyncInit(true);
@@ -37,7 +38,6 @@ public class DataSourceFactory {
         druid.setUrl(property.getUrl());
         try {
             druid.init();
-            druid.getConnection();
             log.info("datasource: {} loaded", property.getUrl());
         } catch (SQLException e) {
             log.warn("druid initial error: ", e);
