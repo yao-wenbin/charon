@@ -5,6 +5,7 @@ import io.github.yaowenbin.server.SpringContextTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class MonitorServiceTest extends IntegrationTest {
 
     @Test
     void listSqlWithoutIndexed() {
-        List<UnindexedSql> result = monitorService.listUnindexedSql();
+        Collection<UnindexedSql> result = monitorService.listUnindexedSql();
         log.info("result: {}", result);
 
         assertThat(result).isNotNull();

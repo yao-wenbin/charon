@@ -19,9 +19,11 @@ public class PerformanceSchemaMapperTest extends SpringContextTest {
     @Test
     void ListUnindexedSql() {
         DataSourceHolder.push("db1");
-        List<UnindexedSql> result = mapper.listNoIndexUsedSql(NoIndexUsedSqlReq.EMPTY);
+        List<UnindexedSql> result = mapper.listNoIndexUsedSql();
+        // var result = mapper.listMysqlThread();
         log.info("listUnindexedSql result: {}", result);
         assertThat(result).isNotNull();
+        assertThat(result).element(0).isNotNull();
     }
 
 
