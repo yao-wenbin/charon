@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-public class SpringContextTest extends UnitTest{
+public class SpringContextTest extends UnitTest {
 
     @Autowired
     protected MockMvc mvc;

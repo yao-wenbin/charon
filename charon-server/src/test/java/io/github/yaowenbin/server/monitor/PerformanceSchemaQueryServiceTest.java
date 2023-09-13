@@ -1,6 +1,7 @@
 package io.github.yaowenbin.server.monitor;
 
 import io.github.yaowenbin.server.SpringContextTest;
+import io.github.yaowenbin.server.mock.TestMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 

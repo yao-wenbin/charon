@@ -1,4 +1,4 @@
-package io.github.yaowenbin.server.monitor;
+package io.github.yaowenbin.server.mock;
 
 import lombok.Data;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,13 +19,3 @@ public interface TestMapper {
 
 }
 
-@Data
-class Test {
-
-    private Long id;
-
-    private String title;
-
-    private Date createTime;
-
-}
