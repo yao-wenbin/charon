@@ -8,6 +8,7 @@ import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaPro
 import lombok.Data;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,13 @@ public class DataSourceMetaDTO {
 
     private final String url;
 
+    private final boolean connected;
+
     public static Collection<DataSourceMetaDTO> transferFrom(Map<String,  DataSource> datasourceMap) {
         List<DataSourceMetaDTO> res = Lists.newArrayList();
         datasourceMap.forEach((dbName, ds) -> {
             DruidDataSource druid = (DruidDataSource) ds;
-            res.add(new DataSourceMetaDTO(dbName, druid.getUsername(), druid.getRawJdbcUrl()));
+            res.add(new DataSourceMetaDTO(dbName, druid.getUsername(), druid.getRawJdbcUrl(), druid.getConnectCount() > 0));
         });
         return res;
     }

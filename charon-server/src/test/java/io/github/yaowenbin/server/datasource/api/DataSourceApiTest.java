@@ -9,6 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * {@link DataSourceApi}
+ * TODO make it in integration Test.
+ */
+
 public class DataSourceApiTest extends SpringContextTest {
 
     @Test
@@ -19,6 +24,7 @@ public class DataSourceApiTest extends SpringContextTest {
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data[0].key").value("db1"))
                 .andExpect(jsonPath("$.data[0].username").value("root"))
+                .andExpect(jsonPath("$.data[0].connected").value("true"))
                 .andExpect(jsonPath("$.data[0].url").value("jdbc:mysql://127.0.0.1:3306/charon"));
     }
 
