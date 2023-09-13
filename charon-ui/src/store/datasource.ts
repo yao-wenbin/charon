@@ -1,5 +1,4 @@
 import { defineStore} from 'pinia'
-import {FormSchema} from "@/components/Form";
 
 export interface DBState {
   collection: Array<DS>
@@ -10,6 +9,7 @@ export interface DS {
   key: String
   username: String
   url: String
+  connected: boolean
 }
 
 export const useDbStore = defineStore({
