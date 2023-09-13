@@ -1,6 +1,6 @@
 datasource:
-  db1:
+  db2:
     username: root
     password: root
     # TODO Using Simple url and warp in DataSourceProperty
-    url: jdbc:mysql://127.0.0.1:3306/charon
+    url: jdbc:mysql://127.0.0.1:99999/charon
