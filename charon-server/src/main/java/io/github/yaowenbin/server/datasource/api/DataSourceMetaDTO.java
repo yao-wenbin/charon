@@ -28,7 +28,7 @@ public class DataSourceMetaDTO {
         List<DataSourceMetaDTO> res = Lists.newArrayList();
         datasourceMap.forEach((dbName, ds) -> {
             DruidDataSource druid = (DruidDataSource) ds;
-            res.add(new DataSourceMetaDTO(dbName, druid.getUsername(), druid.getRawJdbcUrl(), druid.getConnectCount() > 0));
+            res.add(new DataSourceMetaDTO(dbName, druid.getUsername(), druid.getRawJdbcUrl(), druid.getActiveCount() > 0));
         });
         return res;
     }
