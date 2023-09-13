@@ -38,6 +38,7 @@ public class DataSourceFactory {
         try {
             druid.init();
             druid.getConnection();
+            log.info("datasource: {} loaded", property.getUrl());
         } catch (SQLException e) {
             log.warn("druid initial error: ", e);
         }
