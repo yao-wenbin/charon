@@ -9,6 +9,7 @@ import {renderIcon} from '@/utils/index';
  * @param redirect 重定向地址, 访问这个路由时,自定进行重定向
  * @param meta.disabled 禁用整个菜单
  * @param meta.title 菜单名称
+ * @param meta.hide 是否隐藏
  * @param meta.icon 菜单图标
  * @param meta.keepAlive 缓存该路由
  * @param meta.sort 排序越小越排前
@@ -16,33 +17,31 @@ import {renderIcon} from '@/utils/index';
  * */
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/list',
-    name: 'List',
-    redirect: '/list/basic-list',
+    path: '/monitor',
+    name: 'Monitor',
+    redirect: '/monitor/unindexed-sqls',
     component: Layout,
     meta: {
-      title: '列表页面',
+      title: '监控列表',
       icon: renderIcon(TableOutlined),
       sort: 2,
     },
     children: [
       {
-        path: 'basic-list/:key?',
-        name: 'basic-list',
+        path: '/monitor/unindexed-sqls/:key?',
+        name: 'UnindexedSqls',
         meta: {
-          title: '基础列表',
+          title: '无索引查询',
         },
-        component: () => import('@/views/list/basicList/index.vue'),
+        component: () => import('@/views/monitor/unindexed-sqls/index.vue'),
       },
       {
-        path: 'basic-info/:id?',
-        name: 'basic-info',
+        path: '/monitor/mysql-threads/:key?',
+        name: 'MysqlThreads',
         meta: {
-          title: '基础详情',
-          hidden: true,
-          activeMenu: 'basic-list',
+          title: 'MySQL线程',
         },
-        component: () => import('@/views/list/basicList/info.vue'),
+        component: () => import('@/views/monitor/mysql-threads/index.vue'),
       },
     ],
   },

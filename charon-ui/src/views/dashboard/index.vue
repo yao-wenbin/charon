@@ -189,7 +189,7 @@
 
 
   const routerToMonitorCompose = (key) => {
-    router.push({path: `/list/basic-list/${key}`})
+    router.push({path: `/monitor/unindexed-sqls/${key}`})
   }
 
 
