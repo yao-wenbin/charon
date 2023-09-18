@@ -16,7 +16,7 @@ public class DataSourceTestFixture {
     public static CharonConfigProperties configurationProperties = new CharonConfigProperties()
             .setDatasource(Maps.<String, DataSourceMetaProperties>builder().put("db1", dataSourceMetaProperties).build());
 
-    public static MultiDataSource multiDataSource = new MultiDataSource(configurationProperties);
+    public static MultiDataSource multiDataSource = new MultiDataSource(configurationProperties.getDatasource());
 
     public static DataSourceMetaProperties mockMetaProperties() {
         return dataSourceMetaProperties;

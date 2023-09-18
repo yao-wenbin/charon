@@ -2,14 +2,11 @@ package io.github.yaowenbin.server.autoconfiguration;
 
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-import java.nio.file.Path;
 
 /**
  * @Author yaowenbin
@@ -25,7 +22,7 @@ public class DataSourceAutoConfiguration {
     // for using autoconfigurationBefore to createDataSource before DruidDataSourceAutoConfigure.
     @Bean
     public DataSource dataSource() {
-        return new MultiDataSource(properties);
+        return new MultiDataSource(properties.getDatasource());
     }
 
 
