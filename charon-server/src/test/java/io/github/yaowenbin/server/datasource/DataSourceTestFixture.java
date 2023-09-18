@@ -1,9 +1,8 @@
 package io.github.yaowenbin.server.datasource;
 
 import io.github.yaowenbin.commons.map.Maps;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
+import io.github.yaowenbin.server.autoconfiguration.CharonConfigProperties;
 import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
-import io.github.yaowenbin.server.datasource.core.DataSourceFactory;
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 
 
@@ -14,7 +13,7 @@ public class DataSourceTestFixture {
             .setUsername("root")
             .setPassword("root");
 
-    public static DataSourceConfigurationProperties configurationProperties = new DataSourceConfigurationProperties()
+    public static CharonConfigProperties configurationProperties = new CharonConfigProperties()
             .setDatasource(Maps.<String, DataSourceMetaProperties>builder().put("db1", dataSourceMetaProperties).build());
 
     public static MultiDataSource multiDataSource = new MultiDataSource(configurationProperties);

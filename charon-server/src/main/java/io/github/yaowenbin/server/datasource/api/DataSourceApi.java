@@ -1,7 +1,6 @@
 package io.github.yaowenbin.server.datasource.api;
 
 import io.github.yaowenbin.core.http.R;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
 import io.github.yaowenbin.server.datasource.core.DataSourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

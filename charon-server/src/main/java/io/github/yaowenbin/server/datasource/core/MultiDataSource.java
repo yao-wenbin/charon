@@ -1,7 +1,7 @@
 package io.github.yaowenbin.server.datasource.core;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
+import io.github.yaowenbin.server.autoconfiguration.CharonConfigProperties;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
@@ -19,7 +19,7 @@ public class MultiDataSource extends AbstractDataSource implements DataSourceMap
 
     private final Map<String/* DataSourceKey */, DataSource> dataSourcePoolMap = new ConcurrentHashMap<>();
 
-    public MultiDataSource(final DataSourceConfigurationProperties properties) {
+    public MultiDataSource(final CharonConfigProperties properties) {
         properties.getDatasource().forEach((key, property) ->
             dataSourcePoolMap.put(key, DataSourceFactory.build(property))
         );

@@ -3,8 +3,6 @@ package io.github.yaowenbin.server.datasource.api;
 import com.alibaba.druid.pool.DruidDataSource;
 import io.github.yaowenbin.commons.list.Lists;
 import io.github.yaowenbin.commons.map.Pair;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceConfigurationProperties;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
 import lombok.Data;
 
 import javax.sql.DataSource;
