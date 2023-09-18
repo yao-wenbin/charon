@@ -4,6 +4,7 @@ import io.github.yaowenbin.server.SpringContextTest;
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;

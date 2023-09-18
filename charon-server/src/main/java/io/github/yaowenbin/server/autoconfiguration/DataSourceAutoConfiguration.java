@@ -2,9 +2,12 @@ package io.github.yaowenbin.server.autoconfiguration;
 
 import io.github.yaowenbin.server.datasource.core.MultiDataSource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import javax.sql.DataSource;
 
@@ -25,15 +28,14 @@ public class DataSourceAutoConfiguration {
         return new MultiDataSource(properties.getDatasource());
     }
 
+    @Value("${spring.config.additional-location}")
+    public String additionalLocation;
 
-    // @Value("spring.config.additional-location")
-    // String configPath;
-    //
-    // @Bean
-    // @ConditionalOnProperty(prefix = "spring.config", name = "additional-location")
-    // public ConfigFileWatcher fileWatcher() {
-    //     return new ConfigFileWatcher();
-    // }
+    @Bean
+    @ConditionalOnProperty(prefix = "spring.config", name = "additional-location")
+    public ConfigFileWatcher fileWatcher() {
+        return new ConfigFileWatcher(additionalLocation);
+    }
 
 
 }

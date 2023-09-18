@@ -1,18 +1,26 @@
 package io.github.yaowenbin.server.autoconfiguration;
 
-import org.springframework.beans.factory.annotation.Value;
 
+import io.github.yaowenbin.commons.file.FileWatcher;
+import io.github.yaowenbin.commons.file.Files;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.nio.file.Path;
 
 public class ConfigFileWatcher {
 
-    @Value("spring.config.additional-location")
-    String configPath;
-
-    public ConfigFileWatcher() {
-        // Path path = Path.of(configPath);
-        // Files.watch(path, (configPath) -> {
-        //
-        // });
+    public ConfigFileWatcher(String additionalLocation) {
+        File file = null;
+        try {
+             file = ResourceUtils.getFile(additionalLocation);
+        } catch (FileNotFoundException ignore) {
+        }
+        FileWatcher fileWatcher = Files.watch(file.toPath(), (configPath) -> {
+            System.out.println("fileChanged");
+        });
     }
 
 

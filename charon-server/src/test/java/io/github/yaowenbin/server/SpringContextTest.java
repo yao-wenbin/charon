@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * Integration Test with Spring Context and Mock MVC.
  */
-@TestPropertySource(properties = {"spring.config.additional-location= classpath:charon-conf.yml"})
+@TestPropertySource(properties = {"spring.config.additional-location=classpath:charon-conf.yml"})
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
