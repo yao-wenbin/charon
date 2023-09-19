@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -25,5 +24,4 @@ public class CharonApplication {
 		Arrays.stream(args).filter(s -> s.contains("--spring.config.additional-location")).findAny()
 				.orElseThrow(() -> new RuntimeException("please set a configuration file before start."));
 	}
-
 }

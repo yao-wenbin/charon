@@ -1,15 +1,11 @@
 package io.github.yaowenbin.server.autoconfiguration;
 
-import io.github.yaowenbin.server.datasource.core.MultiDataSource;
+import io.github.yaowenbin.server.refresh.Refresh;
+import io.github.yaowenbin.server.refresh.RefreshTest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-
-import javax.sql.DataSource;
 
 /**
  * @Author yaowenbin
@@ -23,19 +19,16 @@ public class DataSourceAutoConfiguration {
     private final CharonConfigProperties properties;
 
     // for using autoconfigurationBefore to createDataSource before DruidDataSourceAutoConfigure.
-    @Bean
-    public DataSource dataSource() {
-        return new MultiDataSource(properties.getDatasource());
-    }
-
-    @Value("${spring.config.additional-location}")
-    public String additionalLocation;
+    // @Bean
+    // @Refresh
+    // public DataSource dataSource() {
+    //     return new MultiDataSource(properties.getDatasource());
+    // }
 
     @Bean
-    @ConditionalOnProperty(prefix = "spring.config", name = "additional-location")
-    public ConfigFileWatcher fileWatcher() {
-        return new ConfigFileWatcher(additionalLocation);
+    @Refresh
+    public RefreshTest refreshTest() {
+        return new RefreshTest();
     }
-
 
 }

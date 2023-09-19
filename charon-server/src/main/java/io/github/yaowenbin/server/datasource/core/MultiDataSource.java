@@ -2,11 +2,14 @@ package io.github.yaowenbin.server.datasource.core;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.github.yaowenbin.server.autoconfiguration.CharonConfigProperties;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
+import io.github.yaowenbin.server.autoconfiguration.DataSourceAutoConfiguration;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.jdbc.datasource.AbstractDataSource;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.Map;
@@ -17,12 +20,18 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Author yaowenbin
  * @Date 2023/8/23
  */
+@AutoConfigureBefore(value = DataSourceAutoConfiguration.class, name = "com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure")
+@Component
+@RequiredArgsConstructor
 public class MultiDataSource extends AbstractDataSource implements DataSourceMap {
 
     private final Map<String/* DataSourceKey */, DataSource> dataSourcePoolMap = new ConcurrentHashMap<>();
 
-    public MultiDataSource(final Map<String, DataSourceMetaProperties> dsMap) {
-        dsMap.forEach((key, property) ->
+    private final CharonConfigProperties properties;
+
+    @PostConstruct
+    void init() {
+        properties.getDatasource().forEach((key, property) ->
             dataSourcePoolMap.put(key, DataSourceFactory.build(property))
         );
     }

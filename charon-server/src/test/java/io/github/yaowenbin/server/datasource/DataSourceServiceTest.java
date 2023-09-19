@@ -1,10 +1,8 @@
 package io.github.yaowenbin.server.datasource;
 
 import io.github.yaowenbin.server.UnitTest;
-import io.github.yaowenbin.server.autoconfiguration.properties.DataSourceMetaProperties;
 import io.github.yaowenbin.server.datasource.api.DataSourceMetaDTO;
 import io.github.yaowenbin.server.datasource.core.DataSourceService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +14,7 @@ class DataSourceServiceTest extends UnitTest {
 
     @BeforeEach
     void setUp() {
-        service.setDataSource(DataSourceTestFixture.mockMultiDataSource());
+        // service.setDataSource(DataSourceTestFixture.mockMultiDataSource());
     }
 
     @Test
