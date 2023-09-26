@@ -9,9 +9,9 @@ import java.util.List;
 @ConfigurationProperties("alert")
 public class AlertProperties {
 
-    private List<AlerterProperties> alerter;
+    private List<AlerterProperty> alerter;
 
-    private List<RuleProperties> rule;
+    private List<RuleProperty> rule;
 
 }
 

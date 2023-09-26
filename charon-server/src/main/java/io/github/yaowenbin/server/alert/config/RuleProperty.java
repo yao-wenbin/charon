@@ -3,7 +3,7 @@ package io.github.yaowenbin.server.alert.config;
 import lombok.Data;
 
 @Data
-public class RuleProperties {
+public class RuleProperty {
 
     private String metricName;
 
