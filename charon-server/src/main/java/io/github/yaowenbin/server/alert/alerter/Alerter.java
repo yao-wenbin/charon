@@ -9,7 +9,7 @@ public interface Alerter {
     enum Type {
         DING("ding"),
         FEISHU("feishu"),
-        WETALK("wetalk"),
+        WETALK("wexin"),
         MAIL("mail");
 
         private final String val;

@@ -6,7 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 /**
  * Alerter that send alert message to Feishu.
@@ -38,19 +41,15 @@ public class FeishuAlerter implements WebhookAlerter {
 
     @Override
     public void sendAlert(AlerterMessage msg) {
-        JSONObject json = buildJSON(msg.getMessage());
+        JSONObject param = buildJSON(msg.getMessage());
 
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<JSONObject> entity = new HttpEntity<>(json, header);
-        JSONObject result = restTemplate.postForObject(webhookUrl, entity, JSONObject.class);
+        HttpEntity<JSONObject> entity = new HttpEntity<>(param, header);
+        ResponseEntity<JSONObject> response = restTemplate.postForEntity(webhookUrl, entity, JSONObject.class);
 
-        if (result != null) {
-            log.info("alerter msg send success by alerter: {}, response message: {}, response code: {}, ",
-                    type(), result.get("msg"),result.get("StatusCode"));
-        } else {
-            log.warn("alerter msg send failed by alerter: {}. Please check the code and Feishu API Document", type());
-        }
+        log.info("alerter msg send success by alerter: {}, response message: {}, response code: {}, ",
+                type(), Optional.ofNullable(response.getBody()).map(body -> body.get("msg")) ,response.getStatusCode());
     }
 
     /**
