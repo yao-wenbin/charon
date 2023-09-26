@@ -6,6 +6,9 @@ datasource:
     url: jdbc:mysql://127.0.0.1:3306/charon
 
 alert:
-  - name: admin
-    type: EMAIL
-    email: ywb992134@163.com
+  alerter:
+    - type: feishu
+      webhook: https://open.feishu.cn/open-apis/bot/v2/hook/c3be04d2-ac6f-41fd-8288-3c0b7c93b71d
+    - type: ding
+      webhook:
+
