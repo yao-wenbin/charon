@@ -10,5 +10,5 @@ alert:
     - type: feishu
       webhook: https://open.feishu.cn/open-apis/bot/v2/hook/c3be04d2-ac6f-41fd-8288-3c0b7c93b71d
     - type: weixin
-      webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
+      webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=30a89145-063f-46d4-82f3-2671107b8ae2
 

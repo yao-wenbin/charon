@@ -16,14 +16,14 @@ public class WeixinAlerter implements WebhookAlerter{
     private String webhook;
     private RestTemplate restTemplate;
 
-    public WeixinAlerter(String webhook, RestTemplate restTemplate) {
+    public WeixinAlerter(String webhook) {
         this.webhook = webhook;
-        this.restTemplate = restTemplate;
+        this.restTemplate = new RestTemplate();
     }
 
     @Override
     public Type type() {
-        return Type.WETALK;
+        return Type.WEIXIN;
     }
 
 

@@ -1,5 +1,9 @@
 package io.github.yaowenbin.server.alert.alerter;
 
+import io.github.yaowenbin.commons.string.Strings;
+
+import java.util.Optional;
+
 public interface Alerter {
 
     Type type();
@@ -7,20 +11,25 @@ public interface Alerter {
     void sendAlert(AlerterMessage message);
 
     enum Type {
-        DING("ding"),
-        FEISHU("feishu"),
-        WETALK("wexin"),
-        MAIL("mail");
+        DING,
+        FEISHU,
+        WEIXIN,
+        MAIL;
 
-        private final String val;
-
-        Type(String val) {
-            this.val = val;
+        public boolean equalsIgnoreCase(String val) {
+            return Strings.equalsIgnoreCase(name(), val);
         }
 
-        boolean equals(String val) {
-            return this.val.equals(val);
+        public static Optional<Type> of(String val) {
+            for (Type type : Type.values()) {
+                if (type.equalsIgnoreCase(val)) {
+                    return Optional.of(type);
+                }
+            }
+            return Optional.empty();
         }
+
+
     }
 
 }
