@@ -8,17 +8,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Slf4j
 public class WeixinAlerter implements WebhookAlerter{
 
+    private final RestTemplate restTemplate;
+    private final ExecutorService executorService;
     private String webhook;
-    private RestTemplate restTemplate;
+
 
     public WeixinAlerter(String webhook) {
         this.webhook = webhook;
         this.restTemplate = new RestTemplate();
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
     @Override
@@ -33,16 +38,19 @@ public class WeixinAlerter implements WebhookAlerter{
     }
 
     @Override
-    public void sendAlert(AlerterMessage message) {
+    public CompletableFuture<Void> sendAlert(AlerterMessage message) {
         JSONObject param = buildParam(message.getMessage());
 
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<JSONObject> entity = new HttpEntity<>(param, header);
-        ResponseEntity<JSONObject> response = restTemplate.postForEntity(webhook, entity, JSONObject.class);
 
-        log.info("alerter msg send success by alerter: {}, response message: {}, response code: {}, ",
-                type(), Optional.ofNullable(response.getBody()).map(body -> body.get("msg")) ,response.getStatusCode());
+        return CompletableFuture.runAsync(() -> {
+            ResponseEntity<JSONObject> response = restTemplate.postForEntity(webhook, entity, JSONObject.class);
+
+            log.info("alerter msg send success by alerter: {}, response code: {}",
+                    type(), response.getStatusCode());
+        }, executorService);
     }
 
     /**

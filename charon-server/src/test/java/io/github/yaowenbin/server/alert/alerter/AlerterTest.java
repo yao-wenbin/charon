@@ -1,7 +1,7 @@
-package io.github.yaowenbin.server;
+package io.github.yaowenbin.server.alert.alerter;
 
-import io.github.yaowenbin.server.alert.alerter.Alerter;
-import io.github.yaowenbin.server.alert.alerter.FeishuAlerter;
+import io.github.yaowenbin.server.SpringContextTest;
+import io.github.yaowenbin.server.UnitTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;

@@ -3,12 +3,13 @@ package io.github.yaowenbin.server.alert.alerter;
 import io.github.yaowenbin.commons.string.Strings;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public interface Alerter {
 
     Type type();
 
-    void sendAlert(AlerterMessage message);
+    CompletableFuture<Void> sendAlert(AlerterMessage message);
 
     enum Type {
         DING,

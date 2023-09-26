@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Alerter that send alert message to Feishu.
@@ -22,11 +25,12 @@ public class FeishuAlerter implements WebhookAlerter {
 
     private final String webhookUrl;
     private final RestTemplate restTemplate;
+    private final ExecutorService executorService;
 
     public FeishuAlerter(String webhookUrl) {
-        this.restTemplate = new RestTemplate();
         this.webhookUrl = webhookUrl;
-
+        this.executorService = Executors.newSingleThreadExecutor();
+        this.restTemplate = new RestTemplate();
     }
 
     @Override
@@ -40,16 +44,17 @@ public class FeishuAlerter implements WebhookAlerter {
     }
 
     @Override
-    public void sendAlert(AlerterMessage msg) {
+    public CompletableFuture<Void> sendAlert(AlerterMessage msg) {
         JSONObject param = buildJSON(msg.getMessage());
 
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<JSONObject> entity = new HttpEntity<>(param, header);
-        ResponseEntity<JSONObject> response = restTemplate.postForEntity(webhookUrl, entity, JSONObject.class);
 
-        log.info("alerter msg send success by alerter: {}, response message: {}, response code: {}, ",
-                type(), Optional.ofNullable(response.getBody()).map(body -> body.get("msg")) ,response.getStatusCode());
+        return CompletableFuture.runAsync(() -> {
+            ResponseEntity<JSONObject> response = restTemplate.postForEntity(webhookUrl, entity, JSONObject.class);
+            log.info("alerter msg send success by alerter: {}, response message: {}, response code: {}, ", type(), Optional.ofNullable(response.getBody()).map(body -> body.get("msg")), response.getStatusCode());
+        }, executorService);
     }
 
     /**
